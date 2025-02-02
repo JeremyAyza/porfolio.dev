@@ -13,7 +13,7 @@ export const PROFILE: ImageData = {
 export const ICON_PERU = "🇵🇪"
 
 interface Links {
-	gitHub: string;
+	github: string;
 	linkedIn: string;
 	email: string;
 	cv: string
@@ -22,7 +22,7 @@ interface Links {
 const CV_FILE_ID = "1soi6pHoNV6zfgH_-2g4RWKmJsyca0Oyo"
 
 export const LINKS: Links = {
-	gitHub: "https://github.com/JeremyAyza",
+	github: "https://github.com/JeremyAyza",
 	linkedIn: "https://linkedin.com/in/JeremyAyza",
 	email: "mailto:jeremy.ayza@gmail.com",
 	cv: getLinkDownloadDrive(CV_FILE_ID)
