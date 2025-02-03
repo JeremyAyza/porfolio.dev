@@ -37,7 +37,7 @@ import MoonIcon from "./icons/Moon.astro"
   // Obtener el tema almacenado o el sistema predeterminado
   const getThemePreference = () => {
     if (typeof localStorage !== "undefined") {
-      return localStorage.getItem("theme") ?? Theme.System
+      return (localStorage.getItem("theme") as Theme) ?? Theme.System
     }
     return matchMedia.matches ? Theme.Dark : Theme.Light
   }
@@ -69,7 +69,7 @@ import MoonIcon from "./icons/Moon.astro"
 
   updateTheme()
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (e: any) => {
     if (!e.target?.closest("#theme-toggle-btn")) {
       // No hacer nada si el click no es sobre el botón de tema
       return
