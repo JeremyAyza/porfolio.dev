@@ -8,18 +8,11 @@ export const PROJECTS = [
 			"Biblioteca de logos SVG de las marcas más populares. +10k visitas al mes. +2K svgs descargados. Creado desde cero con Next.js, React y Tailwind CSS.",
 		link: "https://svgl.vercel.app/",
 		github: "https://github.com/pheralb/svgl",
-		image: "/projects/svgl.webp",
+		image: "/projects/landing-infojobs.webp",
 		tags: [
 			TAGS.NEXT,
 			TAGS.TAILWIND,
-			TAGS.NEXT,
-			TAGS.TAILWIND,
-			TAGS.NEXT,
-			TAGS.TAILWIND,
-			TAGS.NEXT,
-			TAGS.TAILWIND,
-			TAGS.NEXT,
-			TAGS.TAILWIND,
+
 		],
 	},
 	{
