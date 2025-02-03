@@ -8,32 +8,32 @@ export const EXPERIENCE = [
 		title: "Principal Frontend Developer",
 		company: "Casamarket",
 		description:
-			"Lidero el desarrollo y mantenimiento de proyectos frontend, implementando soluciones escalables y de alto rendimiento. Gestiono actividades, superviso la calidad del código y aseguro entregas puntuales. Además, brindo mentoría técnica al equipo, fomentando la colaboración y el crecimiento profesional.",
+			"Lidero el desarrollo de requerimientos y mantenimiento de múltiples proyectos Front-end con tecnologías como React, Vue y Next.js, implementando soluciones escalables y de alto rendimiento. Gestiono actividades, coordino el equipo y aseguro la calidad del código y el cumplimiento de plazos, mientras fomento el crecimiento del equipo compartiendo mi conocimiento técnico.",
 		link: "https://twitch.tv/midudev",
 		skills: [react, vue, typescript, javascript, html, css, sass, tailwind, nodejs],
 	},
 	{
-		date: "Septiembre 2022",
-		title: "React Frontend Developer",
-		company: "Viajiry",
-		description:
-			"Desarrollé componentes interactivos y visuales, como calendarios y formularios de búsqueda, para una plataforma de reservas de viajes.",
-		skills: [react, nextjs, typescript, javascript, sass],
-	},
-	{
-		date: "",
-		title: " Vue Fullstack Developer",
+		date: "Abril 2023 - Septiembre 2023",
+		title: "Vue Fullstack Developer",
 		company: "Inteligenio",
 		description:
-			"Colaboré en el desarrollo de una plataforma de gestión educativa, creando nuevas funcionalidades y mejorando la interfaz visual. Trabajé tanto en el Front-end como en el Back-end, utilizando tecnologías como VueJS, ExpressJS, y PostgreSQL, para asegurar una integración fluida entre ambas partes. Además, trabajé en equipo con áreas de pedagogía y diseño para garantizar una plataforma de alta calidad.",
+			"Desarrollé nuevas funcionalidades y optimicé la interfaz visual de una plataforma educativa, trabajando en el Front-end y Back-end con VueJS, ExpressJS y PostgreSQL. Colaboré con los equipos de pedagogía y diseño para asegurar una plataforma de alta calidad y una integración eficiente.",
 		skills: [vue, javascript, typescript, html, css, sass, tailwind, nodejs],
 	},
 	{
-		date: "",
-		title: "Web Developer",
+		date: "Febrero 2023 - Abril 2023",
+		title: "Fullstack Developer",
 		company: "Paqari",
 		description:
-			"Desarrollé y mantuve una aplicación web para empresas distribuidoras, asegurando una experiencia de usuario óptima en todos los dispositivos. Participé en tareas de Back-end para garantizar la integración de APIs y la funcionalidad del servidor. Utilicé tecnologías como ReactJS, NextJS, y PHP, y colaboré con equipos de soporte y comercial para asegurar la coherencia del producto final.",
+			"Desarrollé y mantuve una aplicación web para distribuidoras, implementando nuevos requerimientos en el Front-end y realizando mantenimiento en el Back-end con ReactJS, NextJS y PHP. Colaboré con los equipos de soporte y comercial para garantizar la calidad y coherencia del producto.",
 		skills: [react, php, javascript, typescript, html, css, sass],
+	},
+	{
+		date: "",
+		title: "React Frontend Developer",
+		company: "Viajiry",
+		description:
+			"Desarrollé componentes interactivos y visuales, como calendarios dinámicos, formularios de búsqueda avanzada, paneles de filtros personalizables y tarjetas de resultados de búsqueda para una plataforma, aprovechando las ventajas de Next.js para implementar renderizado del lado del servidor (SSR).",
+		skills: [react, nextjs, typescript, javascript, sass],
 	},
 ]
