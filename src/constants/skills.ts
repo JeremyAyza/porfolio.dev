@@ -46,6 +46,10 @@ export const SKILLS = {
 		color: "#4FC08D",
 		label: "Vue.js",
 	},
+	vuetify: {
+		color: "#1867C0",
+		label: "Vuetify",
+	},
 	angular: {
 		color: "#DD0031",
 		label: "Angular",
@@ -117,6 +121,10 @@ export const SKILLS = {
 	vite: {
 		color: "#646CFF",
 		label: "Vite",
+	},
+	pwa: {
+		color: "#5A0FC8",
+		label: "PWA",
 	},
 	python: {
 		color: "#3776AB",
