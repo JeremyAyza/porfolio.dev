@@ -1,6 +1,6 @@
-import { TAGS } from "./skills";
-
-
+// import { TAGS } from "./skills";
+import { SKILLS } from "./skills";
+const { react } = SKILLS
 export const PROJECTS = [
 	{
 		title: "SVGL - A beautiful library with SVG logos",
@@ -9,11 +9,10 @@ export const PROJECTS = [
 		link: "https://svgl.vercel.app/",
 		github: "https://github.com/pheralb/svgl",
 		image: "/projects/landing-infojobs.webp",
-		tags: [
-			TAGS.NEXT,
-			TAGS.TAILWIND,
+		skills: [
+			react
+		]
 
-		],
 	},
 	{
 		title: "AdventJS - Retos de programación con JavaScript y TypeScript",
@@ -21,6 +20,6 @@ export const PROJECTS = [
 			"Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
 		link: "https://adventjs.dev",
 		image: "/projects/adventjs.webp",
-		tags: [TAGS.NEXT, TAGS.TAILWIND],
+		// tags: [TAGS.NEXT, TAGS.TAILWIND],
 	},
 ]
