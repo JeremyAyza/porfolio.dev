@@ -1,4 +1,30 @@
 import react from "@/components/simple-icons/react.icon.astro";
+import typescript from "@/components/simple-icons/typescript.icon.astro"
+import javascript from "@/components/simple-icons/javascript.icon.astro"
+import html from "@/components/simple-icons/html.icon.astro"
+import css from "@/components/simple-icons/css.icon.astro"
+import sass from "@/components/simple-icons/sass.icon.astro"
+import tailwind from "@/components/simple-icons/tailwind.icon.astro"
+import nodejs from "@/components/simple-icons/nodejs.icon.astro"
+import express from "@/components/simple-icons/express.icon.astro"
+import nextjs from "@/components/simple-icons/nextjs.icon.astro"
+import vue from "@/components/simple-icons/vue.icon.astro"
+import vuetify from "@/components/simple-icons/vuetify.icon.astro"
+import firebase from "@/components/simple-icons/firebase.icon.astro"
+import mongodb from "@/components/simple-icons/mongodb.icon.astro"
+import mysql from "@/components/simple-icons/mysql.icon.astro"
+import postgresql from "@/components/simple-icons/postgresql.icon.astro"
+import git from "@/components/simple-icons/git.icon.astro"
+import github from "@/components/simple-icons/github.icon.astro"
+import gitlab from "@/components/simple-icons/gitlab.icon.astro"
+// import webpack from "@/components/simple-icons/webpack.icon.astro"
+import vite from "@/components/simple-icons/vite.icon.astro"
+import pwa from "@/components/simple-icons/pwa.icon.astro"
+import python from "@/components/simple-icons/python.icon.astro"
+// import java from "@/components/simple-icons/java.icon.astro"
+import php from "@/components/simple-icons/php.icon.astro"
+import figma from "@/components/simple-icons/figma.icon.astro"
+
 export const SKILLS = {
 	react: {
 		color: "#61DAFB",
@@ -8,57 +34,57 @@ export const SKILLS = {
 	typescript: {
 		color: "#007ACC",
 		label: "TypeScript",
-		icon: import("@/components/simple-icons/typescript.icon.astro"),
+		icon: typescript,
 	},
 	javascript: {
 		color: "#fbc02d",
 		label: "JavaScript",
-		icon: import("@/components/simple-icons/javascript.icon.astro"),
+		icon: javascript,
 	},
 	html: {
 		color: "#E34F26",
 		label: "HTML",
-		icon: import("@/components/simple-icons/html.icon.astro"),
+		icon: html,
 	},
 	css: {
 		color: "#1572B6",
 		label: "CSS",
-		icon: import("@/components/simple-icons/css.icon.astro"),
+		icon: css,
 	},
 	sass: {
 		color: "#CC6699",
 		label: "SASS",
-		icon: import("@/components/simple-icons/sass.icon.astro"),
+		icon: sass,
 	},
 	tailwind: {
 		color: "#06B6D4",
 		label: "Tailwind",
-		icon: import("@/components/simple-icons/tailwind.icon.astro"),
+		icon: tailwind,
 	},
 	nodejs: {
 		color: "#339933",
 		label: "Node.js",
-		icon: import("@/components/simple-icons/nodejs.icon.astro"),
+		icon: nodejs,
 	},
 	express: {
 		color: "#000000",
 		label: "Express",
-		icon: import("@/components/simple-icons/express.icon.astro"),
+		icon: express,
 	},
 	nextjs: {
-		color: "#000000",
+		color: "currentColor",
 		label: "Next.js",
-		icon: import("@/components/simple-icons/nextjs.icon.astro"),
+		icon: nextjs,
 	},
 	vue: {
 		color: "#4FC08D",
 		label: "Vue.js",
-		icon: import("@/components/simple-icons/vue.icon.astro"),
+		icon: vue,
 	},
 	vuetify: {
 		color: "#1867C0",
 		label: "Vuetify",
-		icon: import("@/components/simple-icons/vuetify.icon.astro"),
+		icon: vuetify,
 	},
 	// angular: {
 	// 	color: "#DD0031",
@@ -75,72 +101,72 @@ export const SKILLS = {
 	firebase: {
 		color: "#FFCA28",
 		label: "Firebase",
-		icon: import("@/components/simple-icons/firebase.icon.astro"),
+		icon: firebase,
 	},
 	mongodb: {
 		color: "#47A248",
 		label: "MongoDB",
-		icon: import("@/components/simple-icons/mongodb.icon.astro"),
+		icon: mongodb,
 	},
 	mysql: {
 		color: "#4479A1",
 		label: "MySQL",
-		icon: import("@/components/simple-icons/mysql.icon.astro"),
+		icon: mysql,
 	},
 	postgresql: {
 		color: "#336791",
 		label: "PostgreSQL",
-		icon: import("@/components/simple-icons/postgresql.icon.astro"),
+		icon: postgresql,
 	},
 	git: {
 		color: "#F05032",
 		label: "Git",
-		icon: import("@/components/simple-icons/git.icon.astro"),
+		icon: git,
 	},
 	github: {
 		color: "#181717",
 		label: "GitHub",
-		icon: import("@/components/simple-icons/github.icon.astro"),
+		icon: github,
 	},
 	gitlab: {
 		color: "#FCA121",
 		label: "GitLab",
-		icon: import("@/components/simple-icons/gitlab.icon.astro"),
+		icon: gitlab,
 	},
 	webpack: {
 		color: "#8DD6F9",
 		label: "Webpack",
-		// icon: import("@/components/simple-icons/webpack.icon.astro"),
+		// icon: ,
 	},
 	vite: {
 		color: "#646CFF",
 		label: "Vite",
-		icon: import("@/components/simple-icons/vite.icon.astro"),
+		icon: vite,
 	},
 	pwa: {
 		color: "#5A0FC8",
 		label: "PWA",
-		icon: import("@/components/simple-icons/pwa.icon.astro"),
+		icon: pwa,
 	},
 	python: {
 		color: "#3776AB",
 		label: "Python",
-		icon: import("@/components/simple-icons/python.icon.astro"),
+		icon: python,
 	},
 	java: {
 		color: "#007396",
 		label: "Java",
-		// icon: import("@/components/simple-icons/java.icon.astro"),
+		// icon: ,
 	},
 	php: {
 		color: "#777BB4",
 		label: "PHP",
-		icon: import("@/components/simple-icons/php.icon.astro"),
+		icon: php,
 	},
 	figma: {
 		color: "#F24E1E",
 		label: "Figma",
-		icon: import("@/components/simple-icons/figma.icon.astro"),
+		icon: figma,
 	},
 
 };

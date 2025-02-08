@@ -6,7 +6,8 @@
 			"@/*": [
 				"src/*"
 			]
-		}
+		},
+		"jsx": "react-jsx" //Permite importar achivos .astro en archivos ts
 	},
 	"include": [
 		"src/**/*",

@@ -1,6 +1,6 @@
 // import { TAGS } from "./skills";
 import { SKILLS } from "./skills";
-const { react } = SKILLS
+const { react, nextjs, vue } = SKILLS
 export const PROJECTS = [
 	{
 		title: "SVGL - A beautiful library with SVG logos",
@@ -10,7 +10,7 @@ export const PROJECTS = [
 		github: "https://github.com/pheralb/svgl",
 		image: "/projects/landing-infojobs.webp",
 		skills: [
-			react
+			react, nextjs, vue
 		]
 
 	},

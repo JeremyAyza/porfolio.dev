@@ -58,13 +58,24 @@ const { title, company, description, date, skills } = Astro.props
         </LinkInline>
       )
     } -->
+    <!-- <ul class="flex flex-row mb-2 gap-x-2">
+              {skills?.map((s) => (
+                <li>
+                  <span
+                    class={`flex items-center gap-x-1 rounded-full text-xs dark:bg-white/20 bg-gray-200 py-1 px-2  `}
+                  >
+                    <s.icon class="size-3" color={s.color} />
+                    {s.label}
+                  </span>
+                </li>
+              ))}
+            </ul> -->
     <div class="flex flex-wrap gap-1">
       {
         skills?.map((skill) => (
-          <div
-            class="dark:bg-gray-800 bg-zinc-200  px-2 py-[2px] rounded-xl font-mono text-xs "
-            style={`color: ${skill.color}`}
-          >
+          <div class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1   text-xs ">
+            <skill.icon class="size-3" color={skill.color} />
+
             {skill.label}
           </div>
         ))
