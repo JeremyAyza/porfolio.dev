@@ -1,0 +1,20 @@
+---
+import { type Skill } from "../constants/types"
+interface Props {
+  items: Skill[]
+}
+const { items } = Astro.props
+---
+
+<ul class="flex flex-row flex-wrap gap-1">
+  {
+    items?.map((skill) => (
+      <li>
+        <span class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1 text-xs ">
+          <skill.icon class="size-3" color={skill.color} />
+          {skill.label}
+        </span>
+      </li>
+    ))
+  }
+</ul>

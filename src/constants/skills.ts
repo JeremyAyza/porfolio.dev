@@ -24,8 +24,10 @@ import python from "@/components/simple-icons/python.icon.astro"
 // import java from "@/components/simple-icons/java.icon.astro"
 import php from "@/components/simple-icons/php.icon.astro"
 import figma from "@/components/simple-icons/figma.icon.astro"
+import type { Skill } from "./types";
 
-export const SKILLS = {
+
+export const SKILLS: Record<any, Skill> = {
 	react: {
 		color: "#61DAFB",
 		label: "React",
@@ -68,7 +70,7 @@ export const SKILLS = {
 	},
 	express: {
 		color: "#000000",
-		label: "Express",
+		label: "Express.js",
 		icon: express,
 	},
 	nextjs: {

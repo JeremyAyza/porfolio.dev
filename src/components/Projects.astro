@@ -25,14 +25,12 @@ import { PROJECTS } from "@/constants/projects"
             {title}
           </h3>
           <div class="flex flex-wrap mt-2">
-            <ul class="flex flex-row mb-2 gap-x-2">
-              {skills?.map((s) => (
+            <ul class="flex flex-row flex-wrap gap-1">
+              {skills?.map((skill) => (
                 <li>
-                  <span
-                    class={`flex items-center gap-x-1 rounded-full text-xs dark:bg-white/20 bg-gray-200 py-1 px-2  `}
-                  >
-                    <s.icon class="size-3" color={s.color} />
-                    {s.label}
+                  <span class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1 text-xs ">
+                    <skill.icon class="size-3" color={skill.color} />
+                    {skill.label}
                   </span>
                 </li>
               ))}

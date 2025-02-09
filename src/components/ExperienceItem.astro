@@ -33,53 +33,18 @@ const { title, company, description, date, skills } = Astro.props
     class="relative flex flex-col gap-2 pb-4 text-gray-600 dark:text-gray-300 md:col-span-3"
     set:html
   >
-    {description}
-    <!-- {
-      link && (
-        <LinkInline href={link}>
-          Saber más{" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 icon icon-tabler icon-tabler-chevron-right"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <>
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M9 6l6 6l-6 6" />
-            </>
-          </svg>
-        </LinkInline>
-      )
-    } -->
-    <!-- <ul class="flex flex-row mb-2 gap-x-2">
-              {skills?.map((s) => (
-                <li>
-                  <span
-                    class={`flex items-center gap-x-1 rounded-full text-xs dark:bg-white/20 bg-gray-200 py-1 px-2  `}
-                  >
-                    <s.icon class="size-3" color={s.color} />
-                    {s.label}
-                  </span>
-                </li>
-              ))}
-            </ul> -->
-    <div class="flex flex-wrap gap-1">
+    <p>
+      {description}
+    </p>
+    <ul class="flex flex-row flex-wrap gap-1">
       {
         skills?.map((skill) => (
-          <div class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1   text-xs ">
-            <skill.icon class="size-3" color={skill.color} />
-
-            {skill.label}
-          </div>
+          <li class="flex items-center content-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200 dark:text-white text-black px-2 py-1 text-xs ">
+            <skill.icon class="size-3 " color={skill.color} />
+            <span>{skill.label}</span>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </div>
 </div>
