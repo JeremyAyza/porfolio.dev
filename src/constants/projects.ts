@@ -1,6 +1,7 @@
 // import { TAGS } from "./skills";
 import { SKILLS } from "./skills";
-const { react, nextjs, vue } = SKILLS
+const { react, typescript,java, spring, mysql, threejs, tailwind, javascript, html, css, r3, vite, zustand, bootstrap, reactrouter, node, 
+	express, mongo, mongoose, bun, hono, redux, stripe, nextjs, vue } = SKILLS
 export const PROJECTS = [
 	{
 		title: "SVGL - A beautiful library with SVG logos",
@@ -22,4 +23,277 @@ export const PROJECTS = [
 		image: "/projects/adventjs.webp",
 		// tags: [TAGS.NEXT, TAGS.TAILWIND],
 	},
-]
+  // -------------------------------
+  // 1. Minecraft Clone (React Three Fiber)
+  // -------------------------------
+  {
+    title: "Minecraft Clone – 3D World Builder con React Three Fiber",
+    description:
+      "Clon funcional de Minecraft construido desde cero con React, Three.js y r3. Renderizado 3D en tiempo real, física con Cannon.js, controles de primera persona y sistema de construcción interactivo.",
+    link: "https://minecraft-vite.vercel.app",
+    github: "https://github.com/JeremyAyza/minecraft-vite",
+    image: "!!!",
+    level: "avanzado",
+    hidden: false,
+    skills: [react, typescript, threejs, r3, vite, zustand],
+    features: [
+      "Construcción en tiempo real con texturas dinámicas",
+      "Controles FPS completos (WASD + mouse)",
+      "Física realista con Cannon.js",
+      "Rendimiento optimizado con useFrame",
+      "Gestión global con Zustand"
+    ],
+    highlights: [
+      "Proyecto avanzado de gráficos 3D",
+      "Control manual de render loops y física",
+      "Integración eficiente entre r3 y Cannon.js"
+    ],
+    extra: {
+      date: "!!!",
+      status: "online",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 2. Sales Management Dashboard (React + Bootstrap)
+  // -------------------------------
+  {
+    title: "Sales Management Dashboard",
+    description:
+      "Dashboard administrativo con múltiples módulos: usuarios, clientes, productos, proveedores, ventas y autenticación. UI moderna construida con React y Bootstrap.",
+    link: "!!!",
+    github: "https://github.com/JeremyAyza/sales-management-dashboard",
+    image: "!!!",
+    level: "intermedio",
+    hidden: false,
+    skills: [react, typescript, bootstrap, reactrouter],
+    features: [
+      "Módulo completo de ventas, productos y clientes",
+      "CRUDs con validaciones",
+      "Autenticación básica",
+      "Navegación con React Router",
+      "Tablas dinámicas y componentes reutilizables"
+    ],
+    highlights: [
+      "Arquitectura modular por dominios",
+      "UI profesional completamente responsive"
+    ],
+    extra: {
+      date: "!!!",
+      status: "development",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 3. Todo App – Vanilla JS
+  // -------------------------------
+  {
+    title: "Todo App – Vanilla JavaScript",
+    description:
+      "Aplicación de gestión de tareas con localStorage, manipulación manual del DOM y diseño responsive sin librerías externas.",
+    link: "!!!",
+    github: "https://github.com/JeremyAyza/vanilla-js-todo-list",
+    image: "!!!",
+    level: "básico",
+    hidden: true,
+    skills: [javascript, html, css],
+    features: [
+      "CRUD de tareas con almacenamiento persistente",
+      "UI moderna con CSS puro",
+      "Delegación de eventos",
+      "Renderizado eficiente sin frameworks"
+    ],
+    highlights: [
+      "Excelente demostración de fundamentos del DOM",
+      "Ideal para mostrar evolución técnica"
+    ],
+    extra: {
+      date: "!!!",
+      status: "online",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 4. Inventory Management API (Node + Express + MongoDB)
+  // -------------------------------
+  {
+    title: "Inventory Management API",
+    description:
+      "API REST completa para gestionar inventario, clientes, productos, ventas y usuarios. Construida con Express y MongoDB.",
+    link: "!!!",
+    github: "https://github.com/JeremyAyza/inventory-management-api",
+    image: "!!!",
+    level: "intermedio",
+    hidden: false,
+    skills: [node, express, mongo, mongoose],
+    features: [
+      "CRUD completo para productos, clientes y ventas",
+      "Relaciones entre colecciones",
+      "Validación con Mongoose",
+      "Autenticación básica de usuarios",
+      "Arquitectura modular por responsabilidades"
+    ],
+    highlights: [
+      "Perfecto para demostrar backend sólido",
+      "Mongoose ODM profesionalmente configurado"
+    ],
+    extra: {
+      date: "!!!",
+      status: "development",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 5. AdventJS 2021 – Retos de JavaScript
+  // -------------------------------
+  {
+    title: "AdventJS 2021 – Soluciones a Retos de JavaScript",
+    description:
+      "Colección de soluciones a los 25 retos oficiales de AdventJS 2021. Enfoque en optimización, lógica y estructuras de datos.",
+    link: "https://2021.adventjs.dev",
+    github: "https://github.com/JeremyAyza/AdventJS-2021",
+    image: "!!!",
+    level: "intermedio",
+    hidden: false,
+    skills: [javascript],
+    features: [
+      "25 retos completados",
+      "Enfoque en algoritmos y estructuras de datos",
+      "Soluciones limpias y comentadas"
+    ],
+    highlights: [
+      "Refuerzo sólido de lógica y optimización",
+      "Demuestra consistencia y disciplina"
+    ],
+    extra: {
+      date: "2021",
+      status: "completed",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 6. Scrap Images API (Bun + Hono)
+  // -------------------------------
+  {
+    title: "Scrap Images API – Hono + Bun",
+    description:
+      "API ultrarrápida capaz de obtener miniaturas de imágenes mediante scraping liviano a DuckDuckGo. Documentada con OpenAPI.",
+    link: "!!!",
+    github: "!!!",
+    image: "!!!",
+    level: "avanzado",
+    hidden: false,
+    skills: [bun, hono, typescript],
+    features: [
+      "Scraping sin puppeteer (solo Fetch + HTML parsing)",
+      "Endpoints GET/POST optimizados",
+      "Validación tipada con Valibot",
+      "Documentación automática con Scalar + OpenAPI"
+    ],
+    highlights: [
+      "Arquitectura backend moderna, ligera y veloz",
+      "Uso avanzado del runtime Bun"
+    ],
+    extra: {
+      date: "!!!",
+      status: "online",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 7. Pokédex React
+  // -------------------------------
+  {
+    title: "Pokédex React",
+    description:
+      "Aplicación interactiva para explorar Pokémon, buscar por nombre/ID y guardar favoritos. Construida con React y Tailwind.",
+    link: "!!!",
+    github: "!!!",
+    image: "!!!",
+    level: "básico",
+    hidden: true,
+    skills: [react, tailwind, reactrouter, javascript],
+    features: [
+      "Búsqueda por nombre o ID",
+      "Listado con paginación",
+      "Favoritos con estado local",
+      "Consumo de PokeAPI"
+    ],
+    highlights: [
+      "Proyecto ideal para mostrar fundamentos de React",
+      "Buen ejemplo de UI responsive con Tailwind"
+    ],
+    extra: {
+      date: "!!!",
+      status: "development",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 8. Fullstack E-commerce (React + Node + Stripe)
+  // -------------------------------
+  {
+    title: "E-commerce Fullstack – React + Node + Stripe",
+    description:
+      "Aplicación completa de e-commerce con catálogo, órdenes, pagos, CRUDs administrativos y autenticación JWT.",
+    link: "!!!",
+    github: "!!!",
+    image: "!!!",
+    level: "avanzado",
+    hidden: false,
+    skills: [react, redux, node, express, mongo, stripe],
+    features: [
+      "Autenticación JWT + roles",
+      "Integración completa de Stripe Checkout",
+      "Dashboard administrativo",
+      "Manejo global de estado con Redux",
+      "CRUDs completos de productos, órdenes y categorías"
+    ],
+    highlights: [
+      "Arquitectura fullstack realista",
+      "Flujos complejos de negocio integrados"
+    ],
+    extra: {
+      date: "!!!",
+      status: "development",
+      demoVideo: "!!!"
+    }
+  },
+
+  // -------------------------------
+  // 9. API REST Enter (Java + Spring Boot)
+  // -------------------------------
+  {
+    title: "API REST Enter – Spring Boot + MySQL",
+    description:
+      "API REST para gestionar entidades comerciales como clientes, empleados, productos, roles y boletas.",
+    link: "!!!",
+    github: "!!!",
+    image: "!!!",
+    level: "básico",
+    hidden: true,
+    skills: [java, spring, mysql],
+    features: [
+      "CRUD completo",
+      "Conexión a MySQL",
+      "Estructura clásica con capas",
+      "Uso de Spring Data JPA"
+    ],
+    highlights: [
+      "Demuestra versatilidad en backend con Java",
+      "Ideal como proyecto temprano de aprendizaje"
+    ],
+    extra: {
+      date: "!!!",
+      status: "completed",
+      demoVideo: "!!!"
+    }
+  }
+];
