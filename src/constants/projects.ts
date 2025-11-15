@@ -2,6 +2,13 @@
 import { SKILLS } from "./skills";
 const { react, typescript,java, spring, mysql, threejs, tailwind, javascript, html, css, r3, vite, zustand, bootstrap, reactrouter, node, 
 	express, mongo, mongoose, bun, hono, redux, stripe, nextjs, vue } = SKILLS
+export const CATEGORIES = {
+	FRONTEND: "Frontend",
+	BACKEND: "Backend",
+	MOBILE: "Mobile",
+	FULLSTACK: "Fullstack",
+	ALGORITHMICA: "Algorítmica"
+}
 export const PROJECTS = [
 	{
 		title: "SVGL - A beautiful library with SVG logos",
@@ -12,7 +19,8 @@ export const PROJECTS = [
 		image: "/projects/landing-infojobs.webp",
 		skills: [
 			react, nextjs, vue
-		]
+		],
+		categories: [CATEGORIES.FRONTEND]
 
 	},
 	{
@@ -21,7 +29,7 @@ export const PROJECTS = [
 			"Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
 		link: "https://adventjs.dev",
 		image: "/projects/adventjs.webp",
-		// tags: [TAGS.NEXT, TAGS.TAILWIND],
+		categories: [CATEGORIES.FRONTEND]
 	},
   // -------------------------------
   // 1. Minecraft Clone (React Three Fiber)
@@ -48,6 +56,7 @@ export const PROJECTS = [
       "Control manual de render loops y física",
       "Integración eficiente entre r3 y Cannon.js"
     ],
+    categories: [CATEGORIES.FRONTEND],
     extra: {
       date: "!!!",
       status: "online",
@@ -79,6 +88,7 @@ export const PROJECTS = [
       "Arquitectura modular por dominios",
       "UI profesional completamente responsive"
     ],
+    categories: [CATEGORIES.FULLSTACK],
     extra: {
       date: "!!!",
       status: "development",
@@ -109,6 +119,7 @@ export const PROJECTS = [
       "Excelente demostración de fundamentos del DOM",
       "Ideal para mostrar evolución técnica"
     ],
+    categories: [CATEGORIES.FULLSTACK],
     extra: {
       date: "!!!",
       status: "online",
@@ -140,6 +151,7 @@ export const PROJECTS = [
       "Perfecto para demostrar backend sólido",
       "Mongoose ODM profesionalmente configurado"
     ],
+    categories: [CATEGORIES.BACKEND],
     extra: {
       date: "!!!",
       status: "development",
@@ -169,6 +181,7 @@ export const PROJECTS = [
       "Refuerzo sólido de lógica y optimización",
       "Demuestra consistencia y disciplina"
     ],
+    categories: [CATEGORIES.FULLSTACK],
     extra: {
       date: "2021",
       status: "completed",
@@ -199,6 +212,7 @@ export const PROJECTS = [
       "Arquitectura backend moderna, ligera y veloz",
       "Uso avanzado del runtime Bun"
     ],
+    categories: [CATEGORIES.BACKEND],
     extra: {
       date: "!!!",
       status: "online",
@@ -229,6 +243,7 @@ export const PROJECTS = [
       "Proyecto ideal para mostrar fundamentos de React",
       "Buen ejemplo de UI responsive con Tailwind"
     ],
+    categories: [CATEGORIES.FRONTEND],
     extra: {
       date: "!!!",
       status: "development",
@@ -260,6 +275,7 @@ export const PROJECTS = [
       "Arquitectura fullstack realista",
       "Flujos complejos de negocio integrados"
     ],
+    categories: [CATEGORIES.FULLSTACK],
     extra: {
       date: "!!!",
       status: "development",
@@ -290,6 +306,7 @@ export const PROJECTS = [
       "Demuestra versatilidad en backend con Java",
       "Ideal como proyecto temprano de aprendizaje"
     ],
+    categories: [CATEGORIES.BACKEND],
     extra: {
       date: "!!!",
       status: "completed",

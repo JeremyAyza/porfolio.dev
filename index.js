@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Ruta a los SVG
-const dirPath = path.join(__dirname, "src/assets/simple-icons")
+const dirPath = path.join(__dirname, "src/components/icons/simple-icons")
 
 const updateSVGFiles = () => {
   fs.readdir(dirPath, (err, files) => {

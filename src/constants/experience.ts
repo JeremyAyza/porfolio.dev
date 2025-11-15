@@ -1,7 +1,7 @@
 
 import { SKILLS } from "./skills"
 
-const { react, typescript, javascript, html, css, sass, tailwind, node, vue, php, nextjs, pwa, express, vuetify, github, gitlab } = SKILLS
+const { react, typescript, javascript, sass, tailwind, node, vue, php, nextjs, pwa, express, vuetify, github, gitlab } = SKILLS
 
 export const EXPERIENCE = [
 	{
@@ -10,7 +10,7 @@ export const EXPERIENCE = [
 		company: "Casamarket",
 		description:
 			"Lidero el desarrollo de requerimientos y mantenimiento de múltiples proyectos Front-end con tecnologías como React, Vue y Next.js, implementando soluciones escalables y de alto rendimiento. Gestiono actividades, coordino el equipo y aseguro la calidad del código y el cumplimiento de plazos, mientras fomento el crecimiento del equipo compartiendo mi conocimiento técnico.",
-		link: "https://twitch.tv/midudev",
+		link: "!!!",
 		skills: [react, vue, typescript, javascript, pwa, sass, tailwind, node, github],
 	},
 	{

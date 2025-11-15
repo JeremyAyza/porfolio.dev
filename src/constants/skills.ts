@@ -33,7 +33,7 @@
  bun,
  hono,
  coffeescript,
- webpack } from "@/assets/simple-icons/index";
+ webpack } from "@/components/icons/simple-icons/index";
 
 
 export const SKILLS= {
