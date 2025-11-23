@@ -1,5 +1,6 @@
 // import { TAGS } from "./skills";
 import { SKILLS } from "./skills";
+import type { Project } from "./types";
 const { react, typescript,java, spring, mysql, threejs, tailwind, javascript, html, css, r3, vite, zustand, bootstrap, reactrouter, node, 
 	express, mongo, mongoose, bun, hono, redux, stripe, nextjs, vue } = SKILLS
 export const CATEGORIES = {
@@ -9,38 +10,14 @@ export const CATEGORIES = {
 	FULLSTACK: "Fullstack",
 	ALGORITHMICA: "Algorítmica"
 }
-export const PROJECTS = [
+export const PROJECTS: Project[] = [
 	{
-		title: "SVGL - A beautiful library with SVG logos",
-		description:
-			"Biblioteca de logos SVG de las marcas más populares. +10k visitas al mes. +2K svgs descargados. Creado desde cero con Next.js, React y Tailwind CSS.",
-		link: "https://svgl.vercel.app/",
-		github: "https://github.com/pheralb/svgl",
-		image: "/projects/landing-infojobs.webp",
-		skills: [
-			react, nextjs, vue
-		],
-		categories: [CATEGORIES.FRONTEND]
-
-	},
-	{
-		title: "AdventJS - Retos de programación con JavaScript y TypeScript",
-		description:
-			"Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
-		link: "https://adventjs.dev",
-		image: "/projects/adventjs.webp",
-		categories: [CATEGORIES.FRONTEND]
-	},
-  // -------------------------------
-  // 1. Minecraft Clone (React Three Fiber)
-  // -------------------------------
-  {
     title: "Minecraft Clone – 3D World Builder con React Three Fiber",
     description:
       "Clon funcional de Minecraft construido desde cero con React, Three.js y r3. Renderizado 3D en tiempo real, física con Cannon.js, controles de primera persona y sistema de construcción interactivo.",
-    link: "https://minecraft-vite.vercel.app",
-    github: "https://github.com/JeremyAyza/minecraft-vite",
-    image: "!!!",
+    link: "https://minecraft-react-iuff.onrender.com/",
+    github: "https://github.com/JeremyAyza/minecraft-react",
+    image: "/projects/react-minecraft.webp",
     level: "avanzado",
     hidden: false,
     skills: [react, typescript, threejs, r3, vite, zustand],
@@ -63,6 +40,33 @@ export const PROJECTS = [
       demoVideo: "!!!"
     }
   },
+	{
+		title: "SVGL - A beautiful library with SVG logos",
+		description:
+			"Biblioteca de logos SVG de las marcas más populares. +10k visitas al mes. +2K svgs descargados. Creado desde cero con Next.js, React y Tailwind CSS.",
+		link: "https://svgl.vercel.app/",
+		github: "https://github.com/pheralb/svgl",
+		image: "/projects/landing-infojobs.webp",
+		skills: [
+			react, nextjs, vue
+		],
+		categories: [CATEGORIES.FRONTEND]
+
+	},
+	{
+		title: "AdventJS - Retos de programación con JavaScript y TypeScript",
+		description:
+			"Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
+		link: "https://adventjs.dev",
+		image: "/projects/adventjs.webp",
+		categories: [CATEGORIES.FRONTEND],
+		github: "https://github.com/JeremyAyza/adventjs",
+		skills: [react, nextjs, vue]
+	},
+  // -------------------------------
+  // 1. Minecraft Clone (React Three Fiber)
+  // -------------------------------
+  
 
   // -------------------------------
   // 2. Sales Management Dashboard (React + Bootstrap)
