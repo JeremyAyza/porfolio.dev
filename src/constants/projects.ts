@@ -41,6 +41,35 @@ export const PROJECTS: Project[] = [
     }
   },
 	{
+  title: "InsightOS – AI Ethics & Data Dashboard",
+  description:
+    "Dashboard interactivo de monitoreo de métricas éticas de IA y análisis de datos globales. Interfaz futurista con diseño cyber-tech, gráficos en tiempo real y navegación modular.",
+  link: "https://dashboard-insight-os.onrender.com/",
+  github: "https://github.com/JeremyAyza/dashboard-insight-os",
+  image: "/projects/insightos-dashboard.webp",
+  level: "avanzado",
+  hidden: false,
+  skills: [react, typescript, vite, tailwind],
+  features: [
+    "Dashboard con múltiples vistas: métricas éticas, actividad de IA, huella global",
+    "Gráficos interactivos con Recharts",
+    "Explorador de datos con filtros avanzados",
+    "Autenticación y sistema de login",
+    "Diseño futurista con estética cyber-tech"
+  ],
+  highlights: [
+    "Arquitectura modular por features",
+    "UI/UX premium con animaciones y efectos glassmorphism",
+    "Sistema de navegación fluido con React Router"
+  ],
+  categories: [CATEGORIES.FRONTEND],
+  extra: {
+    date: "2025",
+    status: "development",
+    demoVideo: "!!!"
+  }
+},
+	{
 		title: "SVGL - A beautiful library with SVG logos",
 		description:
 			"Biblioteca de logos SVG de las marcas más populares. +10k visitas al mes. +2K svgs descargados. Creado desde cero con Next.js, React y Tailwind CSS.",
