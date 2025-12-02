@@ -19,7 +19,7 @@ interface Links {
 	cv: string
 }
 
-const CV_FILE_ID = "1cZmmx6sHmdH9nF06h1hMDnTNZCC0ES_m"
+const CV_FILE_ID = "1BCEQGue_kECo2KJZ_qZm8V3KoYtDD0nO"
 
 export const LINKS: Links = {
 	github: "https://github.com/JeremyAyza",
