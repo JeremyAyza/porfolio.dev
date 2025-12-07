@@ -69,6 +69,35 @@ export const PROJECTS: Project[] = [
     demoVideo: "!!!"
   }
 },
+ {
+    title: "Instagram Follow Manager PRO",
+    description:
+      "Extensión de Chrome profesional para la gestión de seguidores. Analiza conexiones, detecta 'non-followers' y automatiza tareas con seguridad avanzada y privacidad local.",
+    link: "!!!",
+    github: "https://github.com/JeremyAyza/instagram-tool",
+    image: "/assets/ig-tool.webp",
+    level: "avanzado",
+    hidden: false,
+    skills: [javascript, html, css],
+    features: [
+      "Análisis en tiempo real de seguidores vs seguidos",
+      "Intercepción de tráfico de red para sincronización automática",
+      "Automatización con delays y 'jitter' para evitar bloqueos",
+      "Exportación e importación masiva de CSV",
+      "Privacidad total: ejecución 100% client-side"
+    ],
+    highlights: [
+      "Manipulación avanzada de Chrome Extensions API",
+      "Ingeniería inversa de endpoints de Instagram",
+      "Manejo robusto de headers de seguridad (Sec-Fetch-Site)"
+    ],
+    categories: [CATEGORIES.FRONTEND],
+    extra: {
+      date: "2025",
+      status: "development",
+      demoVideo: "!!!"
+    }
+  },
 	{
 		title: "SVGL - A beautiful library with SVG logos",
 		description:
