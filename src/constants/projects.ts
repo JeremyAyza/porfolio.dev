@@ -75,7 +75,7 @@ export const PROJECTS: Project[] = [
       "Extensión de Chrome profesional para la gestión de seguidores. Analiza conexiones, detecta 'non-followers' y automatiza tareas con seguridad avanzada y privacidad local.",
     link: "!!!",
     github: "https://github.com/JeremyAyza/instagram-tool",
-    image: "/assets/ig-tool.webp",
+    image: "/projects/ig-tool.webp",
     level: "avanzado",
     hidden: false,
     skills: [javascript, html, css],
