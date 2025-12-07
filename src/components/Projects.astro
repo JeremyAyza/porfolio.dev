@@ -11,96 +11,56 @@ const otherProjects = PROJECTS.slice(3)
 <div class="flex flex-col gap-y-16">
 	{
 		featuredProjects.map(
-			(
-				{ image, title, description, skills, link, github, highlights, extra },
-				index,
-			) => {
-				const isEven = index % 2 === 0
-				return (
-					<article
-						class={`flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0 ${!isEven ? "md:flex-row-reverse" : ""}`}
-					>
-						<div class="w-full md:w-1/2">
-							<div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-								<img
-									alt={title}
-									class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
-									loading="lazy"
-									src={image}
-								/>
-							</div>
+			({ image, title, description, skills, link, github }) => (
+				<article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+					<div class="w-full md:w-1/2">
+						<div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+							<img
+								alt={title}
+								class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
+								loading="lazy"
+								src={image}
+							/>
 						</div>
+					</div>
 
-						<div class="w-full md:w-1/2 md:max-w-lg">
-							<div class="flex items-center gap-3 mb-2">
-								<h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-									{title}
-								</h3>
-								{extra?.status && (
-									<span
-										class={`px-2 py-0.5 text-xs font-semibold rounded-full border text-nowrap
-                      ${
-												extra.status === "online" ||
-												extra.status === "completed"
-													? "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800"
-													: "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800"
-											}`}
-									>
-										{extra.status === "online" ? "En Línea" : "En Desarrollo"}
-									</span>
-								)}
+					<div class="w-full md:w-1/2 md:max-w-lg">
+						<h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+							{title}
+						</h3>
+						<div class="flex flex-wrap mt-2">
+							<ul class="flex flex-row flex-wrap gap-1">
+								{skills?.map((skill) => (
+									<li>
+										<span class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1 text-xs ">
+											<skill.icon class="size-3" color={skill.color} />
+											{skill.label}
+										</span>
+									</li>
+								))}
+							</ul>
+
+							<div class="mt-2 text-gray-700 dark:text-gray-400">
+								{description}
 							</div>
-
-							<div class="flex flex-wrap mt-2">
-								<ul class="flex flex-row flex-wrap gap-1 mb-4">
-									{skills?.map((skill) => (
-										<li>
-											<span class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1 text-xs ">
-												<skill.icon class="size-3" color={skill.color} />
-												{skill.label}
-											</span>
-										</li>
-									))}
-								</ul>
-
-								<div class="text-gray-700 dark:text-gray-400 text-pretty">
-									{description}
-								</div>
-
-								{highlights && highlights.length > 0 && (
-									<div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 w-full">
-										<h4 class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-											Destacado:
-										</h4>
-										<ul class="list-disc list-inside space-y-1">
-											{highlights.slice(0, 3).map((item) => (
-												<li class="text-xs text-gray-600 dark:text-gray-400">
-													{item}
-												</li>
-											))}
-										</ul>
-									</div>
+							<footer class="flex items-end justify-start mt-4 gap-x-4">
+								{github && github !== "!!!" && (
+									<LinkButton href={github}>
+										<GitHub class="size-6" />
+										Code
+									</LinkButton>
 								)}
-
-								<footer class="flex items-end justify-start mt-6 gap-x-4 w-full">
-									{github && github !== "!!!" && (
-										<LinkButton href={github}>
-											<GitHub class="size-6" />
-											Code
-										</LinkButton>
-									)}
-									{link && link !== "!!!" && (
-										<LinkButton href={link}>
-											<Link class="size-4" />
-											Preview
-										</LinkButton>
-									)}
-								</footer>
-							</div>
+								{link && link !== "!!!" && (
+									<LinkButton href={link}>
+										<Link class="size-4" />
+										Preview
+									</LinkButton>
+								)}
+							</footer>
 						</div>
-					</article>
-				)
-			},
+					</div>
+				</article>
+			),
 		)
 	}
 </div>
