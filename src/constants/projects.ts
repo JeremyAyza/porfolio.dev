@@ -73,7 +73,7 @@ export const PROJECTS: Project[] = [
     title: "Instagram Follow Manager PRO",
     description:
       "Extensión de Chrome profesional para la gestión de seguidores. Analiza conexiones, detecta 'non-followers' y automatiza tareas con seguridad avanzada y privacidad local.",
-    link: "!!!",
+    link: "",
     github: "https://github.com/JeremyAyza/instagram-tool",
     image: "/projects/ig-tools.webp",
     level: "avanzado",
