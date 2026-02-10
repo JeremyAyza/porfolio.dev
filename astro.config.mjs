@@ -8,5 +8,5 @@ import robotsTxt from "astro-robots-txt"
 // https://astro.build/config
 export default defineConfig({
 	integrations: [tailwind(), robotsTxt(), sitemap()],
-	site: 'https://porfolio-jeremy-ayza.onrender.com/'
+	site: 'https://porfolio-jeremy-ayza.onrender.com'
 })
