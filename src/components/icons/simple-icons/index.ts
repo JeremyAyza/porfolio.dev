@@ -37,3 +37,4 @@ export { default as bun } from "./bun.icon.astro";
 export { default as hono } from "./hono.icon.astro";
 export { default as coffeescript } from "./coffeescript.icon.astro";
 export { default as webpack } from "./webpack.icon.astro";
+export { default as sparkle } from "./sparkle.icon.astro";

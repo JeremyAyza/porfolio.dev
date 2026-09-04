@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg3)"/>
+  <g opacity="0.18" stroke="#eab308" stroke-width="1.5">
+    <rect x="760" y="100" width="140" height="140" rx="10"/>
+    <rect x="920" y="100" width="140" height="140" rx="10"/>
+    <rect x="760" y="260" width="140" height="140" rx="10"/>
+    <rect x="920" y="260" width="140" height="140" rx="10"/>
+  </g>
+  <g font-family="monospace" fill="#9ca3af" font-size="14">
+    <rect x="80" y="80" width="14" height="14" rx="3" fill="#eab308"/>
+    <text x="104" y="92">node.js · gpt-4o vision · playwright</text>
+  </g>
+  <text x="80" y="330" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="700" fill="#f9fafb">Moon Style</text>
+  <text x="80" y="400" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#eab308">Catalog Auto-Publisher</text>
+  <text x="80" y="460" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#9ca3af">GPT-4o Vision estructura catálogos · publicación human-in-the-loop</text>
+</svg>

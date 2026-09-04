@@ -4,8 +4,11 @@ import Link from "./icons/Link.astro"
 import LinkButton from "./LinkButton.astro"
 import { PROJECTS } from "@/constants/projects"
 
-const featuredProjects = PROJECTS.slice(0, 3)
-const otherProjects = PROJECTS.slice(3)
+// NOTA: `hidden` existía en el tipo Project pero nunca se filtraba aquí —
+// las tarjetas marcadas hidden:true igual se renderizaban. Se corrige aquí.
+const visibleProjects = PROJECTS.filter((p) => !p.hidden)
+const featuredProjects = visibleProjects.slice(0, 3)
+const otherProjects = visibleProjects.slice(3)
 ---
 
 <div class="flex flex-col gap-y-16">

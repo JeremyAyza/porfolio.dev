@@ -1,39 +1,23 @@
 import { SKILLS } from "./skills"
 
-const { react, typescript, javascript, sass, tailwind, node, vue, php, nextjs, pwa, express, vuetify, github, gitlab } = SKILLS
+const { react, typescript, javascript, tailwind, node, vue, php, nextjs, pwa, express, vuetify, github, postgresql, openai, whisper, huggingface } = SKILLS
 
 export const EXPERIENCE = [
   {
     date: "Septiembre 2023 - Actualidad",
-    title: "Tech Lead & Web Developer",
+    title: "Tech Lead & Fullstack Developer",
     company: "CasaMarket",
     description:
-      "Lidero el equipo de frontend y la calidad técnica. Logré una <strong>reducción del 77% en tiempos de deployment</strong> migrando legacy code. Diseñé la solución <strong>Offline-First (PWA)</strong> para el POS garantizando continuidad operativa. Actúo como mentor técnico y mantengo la estabilidad integral (Node.js/Vue/React) de 4 sistemas críticos.",
+      "Lidero el equipo de frontend y la calidad técnica de 4 sistemas en producción. Reduje un <strong>77% el tiempo de deployment</strong> liderando una migración técnica de infraestructura legacy. Diseñé la arquitectura <strong>Offline-First (PWA)</strong> del punto de venta y llevé IA generativa a producto real: <strong>RAG interno</strong>, búsqueda semántica vectorial y comandos de voz para flujos de venta desatendidos. También diseño el <strong>workflow de desarrollo del equipo</strong> con agentes de código (Skills, MCP) para automatizar releases y research.",
     link: "https://casamarket.com", // Agrega el link real si lo tienes
-    skills: [vue, react, typescript, node, pwa, tailwind, github],
+    skills: [vue, react, typescript, node, pwa, tailwind, openai, whisper, huggingface, github],
   },
   {
-    date: "Abril 2023 - Septiembre 2023",
-    title: "Frontend Developer",
+    date: "Febrero 2023 - Septiembre 2023",
+    title: "Fullstack Developer",
     company: "Inteligenio",
     description:
-      "Desarrollo de plataforma educativa <strong>SaaS</strong>. Implementé módulos interactivos para clases virtuales y exámenes, optimizando la experiencia de usuario con <strong>Vue y Vuetify</strong>. Participé en la creación de soluciones escalables para la comercialización del producto.",
-    skills: [vue, vuetify, javascript, express, node, github],
-  },
-  {
-    date: "Junio 2023 - Julio 2023",
-    title: "Frontend Developer (Consultoría)",
-    company: "Viajiry",
-    description:
-      "Consultoría especializada en UI. Desarrollé <strong>calendarios dinámicos</strong> y paneles de filtros avanzados. Aproveché <strong>Next.js (SSR)</strong> para garantizar un alto rendimiento en interfaces de búsqueda complejas.",
-    skills: [nextjs, react, typescript, sass, gitlab],
-  },
-  {
-    date: "Febrero 2023 - Abril 2023",
-    title: "Analista Frontend Developer",
-    company: "Paqari Software",
-    description:
-      "Mantenimiento <strong>Fullstack</strong> de una aplicación SaaS B2B. Implementé nuevos módulos en el frontend (React/Next.js) y aseguré la estabilidad del backend (PHP/CodeIgniter), colaborando directamente con el equipo comercial.",
-    skills: [react, nextjs, php, javascript, node, github],
+      "Desarrollo y mantenimiento de plataformas <strong>SaaS B2B</strong> y de una plataforma educativa (aulas virtuales, exámenes interactivos). Optimicé listados pesados con <strong>Next.js (SSR)</strong>, diseñé endpoints con <strong>Node.js/Express</strong> y modelé datos en <strong>PostgreSQL</strong>, además de dar soporte a arquitectura legacy en PHP/CodeIgniter sin interrumpir un negocio B2B activo.",
+    skills: [nextjs, react, vue, vuetify, javascript, express, node, postgresql, php, github],
   },
 ]

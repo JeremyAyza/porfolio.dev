@@ -33,7 +33,8 @@
  bun,
  hono,
  coffeescript,
- webpack } from "@/components/icons/simple-icons/index";
+ webpack,
+ sparkle } from "@/components/icons/simple-icons/index";
 
 
 export const SKILLS= {
@@ -221,5 +222,32 @@ export const SKILLS= {
     color: "#F24E1E",
     label: "Figma",
     icon: figma,
+  },
+  // Nota: sin icono de marca oficial disponible en este set — reutilizamos
+  // un glyph genérico de "sparkle" (mismo patrón que zustand reusa el icono de redux).
+  openai: {
+    color: "#412991",
+    label: "OpenAI API",
+    icon: sparkle,
+  },
+  gemini: {
+    color: "#8E75B2",
+    label: "Gemini API",
+    icon: sparkle,
+  },
+  whisper: {
+    color: "#10A37F",
+    label: "Whisper",
+    icon: sparkle,
+  },
+  huggingface: {
+    color: "#FFD21E",
+    label: "Hugging Face",
+    icon: sparkle,
+  },
+  agentic: {
+    color: "#D97757",
+    label: "Claude Code / Agentic",
+    icon: sparkle,
   },
 };
