@@ -12,6 +12,8 @@ export interface Project {
 	image: string;
 	level?: string;
 	hidden?: boolean;
+	featured?: boolean;
+	company?: string;
 	skills: Skill[];
 	features?: string[];
 	highlights?: string[];

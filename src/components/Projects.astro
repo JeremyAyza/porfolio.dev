@@ -4,36 +4,58 @@ import Link from "./icons/Link.astro"
 import LinkButton from "./LinkButton.astro"
 import { PROJECTS } from "@/constants/projects"
 
-const featuredProjects = PROJECTS.slice(0, 3)
-const otherProjects = PROJECTS.slice(3)
+const visibleProjects = PROJECTS.filter((project) => !project.hidden)
+const featuredProjects = visibleProjects.filter((project) => project.featured)
+const otherProjects = visibleProjects.filter((project) => !project.featured)
+
+const hasLink = (url?: string) => Boolean(url) && url !== "!!!"
 ---
 
 <div class="flex flex-col gap-y-16">
 	{
 		featuredProjects.map(
-			({ image, title, description, skills, link, github }) => (
+			({
+				image,
+				title,
+				company,
+				description,
+				skills,
+				highlights,
+				extra,
+				link,
+				github,
+			}) => (
 				<article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
-					<div class="w-full md:w-1/2">
-						<div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-							<img
-								alt={title}
-								class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
-								loading="lazy"
-								src={image}
-							/>
+					{image && (
+						<div class="w-full md:w-1/2">
+							<div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+								<img
+									alt={title}
+									class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
+									loading="lazy"
+									src={image}
+								/>
+							</div>
 						</div>
-					</div>
+					)}
 
-					<div class="w-full md:w-1/2 md:max-w-lg">
+					<div class={image ? "w-full md:w-1/2 md:max-w-lg" : "w-full"}>
 						<h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
 							{title}
 						</h3>
+						{(company || extra?.date) && (
+							<p class="mt-1 text-sm text-gray-600/80 dark:text-white/80">
+								{[company, extra?.date].filter(Boolean).join(" · ")}
+							</p>
+						)}
 						<div class="flex flex-wrap mt-2">
 							<ul class="flex flex-row flex-wrap gap-1">
 								{skills?.map((skill) => (
 									<li>
 										<span class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1 text-xs ">
-											<skill.icon class="size-3" color={skill.color} />
+											{skill.icon && (
+												<skill.icon class="size-3" color={skill.color} />
+											)}
 											{skill.label}
 										</span>
 									</li>
@@ -43,20 +65,37 @@ const otherProjects = PROJECTS.slice(3)
 							<div class="mt-2 text-gray-700 dark:text-gray-400">
 								{description}
 							</div>
-							<footer class="flex items-end justify-start mt-4 gap-x-4">
-								{github && github !== "!!!" && (
-									<LinkButton href={github}>
-										<GitHub class="size-6" />
-										Code
-									</LinkButton>
-								)}
-								{link && link !== "!!!" && (
-									<LinkButton href={link}>
-										<Link class="size-4" />
-										Preview
-									</LinkButton>
-								)}
-							</footer>
+							{highlights && (
+								<ul class="w-full pl-5 mt-3 space-y-2 text-gray-700 list-disc dark:text-gray-400 text-pretty">
+									{highlights.map((highlight) => (
+										<li>{highlight}</li>
+									))}
+								</ul>
+							)}
+							{extra?.status && (
+								<p class="w-full mt-3 text-gray-700 dark:text-gray-300">
+									<strong class="font-semibold text-gray-800 dark:text-gray-100">
+										Estado:
+									</strong>
+									{extra.status}
+								</p>
+							)}
+							{(hasLink(github) || hasLink(link)) && (
+								<footer class="flex items-end justify-start mt-4 gap-x-4">
+									{hasLink(github) && (
+										<LinkButton href={github}>
+											<GitHub class="size-6" />
+											Code
+										</LinkButton>
+									)}
+									{hasLink(link) && (
+										<LinkButton href={link}>
+											<Link class="size-4" />
+											Preview
+										</LinkButton>
+									)}
+								</footer>
+							)}
 						</div>
 					</div>
 				</article>
@@ -69,11 +108,11 @@ const otherProjects = PROJECTS.slice(3)
 	otherProjects.length > 0 && (
 		<div class="mt-20">
 			<h3 class="mb-8 text-2xl font-semibold text-gray-800 dark:text-gray-200 text-center">
-				Otros Proyectos Destacados
+				Otros proyectos
 			</h3>
 
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{otherProjects.map(({ title, description, skills }) => (
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+				{otherProjects.map(({ title, description, skills, link, github }) => (
 					<article class="flex flex-col p-6 transition-all duration-300 border rounded-xl bg-white/50 dark:bg-gray-900/50 border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-lg group">
 						<header class="flex-1">
 							<h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-yellow-500 dark:group-hover:text-yellow-400 transition-colors">
@@ -89,7 +128,9 @@ const otherProjects = PROJECTS.slice(3)
 								<ul class="flex flex-wrap gap-2 mb-4">
 									{skills.slice(0, 4).map((skill) => (
 										<span class="flex items-center gap-x-1 rounded-full dark:bg-gray-800 bg-zinc-200  px-2 py-1 text-xs ">
-											<skill.icon class="size-3" color={skill.color} />
+											{skill.icon && (
+												<skill.icon class="size-3" color={skill.color} />
+											)}
 											{skill.label}
 										</span>
 									))}
@@ -99,6 +140,32 @@ const otherProjects = PROJECTS.slice(3)
 										</span>
 									)}
 								</ul>
+							)}
+							{(hasLink(github) || hasLink(link)) && (
+								<footer class="flex items-center text-sm font-medium text-gray-700 gap-x-4 dark:text-gray-300">
+									{hasLink(github) && (
+										<a
+											href={github}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center transition-colors gap-x-1 hover:text-yellow-500 dark:hover:text-yellow-400"
+										>
+											<GitHub class="size-4" />
+											Code
+										</a>
+									)}
+									{hasLink(link) && (
+										<a
+											href={link}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center transition-colors gap-x-1 hover:text-yellow-500 dark:hover:text-yellow-400"
+										>
+											<Link class="size-4" />
+											Preview
+										</a>
+									)}
+								</footer>
 							)}
 						</div>
 					</article>

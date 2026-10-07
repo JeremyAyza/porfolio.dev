@@ -33,7 +33,19 @@
  bun,
  hono,
  coffeescript,
- webpack } from "@/components/icons/simple-icons/index";
+ webpack,
+ nestjs,
+ typeorm,
+ vercel,
+ zod,
+ modelcontextprotocol,
+ huggingface,
+ reactquery,
+ shadcnui,
+ netlify,
+ cloudflarepages,
+ googleanalytics,
+ claude } from "@/components/icons/simple-icons/index";
 
 
 export const SKILLS= {
@@ -118,9 +130,8 @@ export const SKILLS= {
     icon: r3,
   },
   zustand: {
-    color: "#000000",
+    color: "currentColor",
     label: "Zustand",
-    icon: redux,
   },
   bootstrap: {
     color: "#563D7C",
@@ -221,5 +232,93 @@ export const SKILLS= {
     color: "#F24E1E",
     label: "Figma",
     icon: figma,
+  },  nestjs: {
+    color: "#E0234E",
+    label: "NestJS",
+    icon: nestjs,
+  },
+  typeorm: {
+    color: "#FE0803",
+    label: "TypeORM",
+    icon: typeorm,
+  },
+  vercelAiSdk: {
+    color: "currentColor",
+    label: "Vercel AI SDK",
+    icon: vercel,
+  },
+  zod: {
+    color: "#408AFF",
+    label: "Zod",
+    icon: zod,
+  },
+  mcp: {
+    color: "currentColor",
+    label: "MCP",
+    icon: modelcontextprotocol,
+  },
+  transformersjs: {
+    color: "#FFD21E",
+    label: "Transformers.js",
+    icon: huggingface,
+  },
+  tanstackQuery: {
+    color: "#FF4154",
+    label: "TanStack Query",
+    icon: reactquery,
+  },
+  shadcn: {
+    color: "currentColor",
+    label: "shadcn",
+    icon: shadcnui,
+  },
+  netlify: {
+    color: "#00C7B7",
+    label: "Netlify",
+    icon: netlify,
+  },
+  cloudflarePages: {
+    color: "#F38020",
+    label: "Cloudflare Pages",
+    icon: cloudflarepages,
+  },
+  ga4: {
+    color: "#E37400",
+    label: "GA4",
+    icon: googleanalytics,
+  },
+  claudeCode: {
+    color: "#D97757",
+    label: "Claude Code",
+    icon: claude,
+  },
+  // Sin icono en simple-icons: se muestran solo con el nombre.
+  playwright: {
+    color: "currentColor",
+    label: "Playwright",
+  },
+  pgvector: {
+    color: "currentColor",
+    label: "pgvector",
+  },
+  insforge: {
+    color: "currentColor",
+    label: "InsForge",
+  },
+  gpt4oMini: {
+    color: "currentColor",
+    label: "gpt-4o-mini",
+  },
+  orama: {
+    color: "currentColor",
+    label: "Orama",
+  },
+  webWorker: {
+    color: "currentColor",
+    label: "Web Worker",
+  },
+  recharts: {
+    color: "currentColor",
+    label: "Recharts",
   },
 };
