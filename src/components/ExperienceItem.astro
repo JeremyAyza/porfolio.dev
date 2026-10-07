@@ -5,10 +5,11 @@ interface Props {
 	description: string
 	link?: string
 	date: string
+	highlights?: string[]
 	skills?: any[]
 }
 
-const { title, company, description, date, skills } = Astro.props
+const { title, company, description, date, highlights, skills } = Astro.props
 ---
 
 <div
@@ -41,14 +42,26 @@ const { title, company, description, date, skills } = Astro.props
 		<p class="mb-4 text-base font-normal text-pretty" set:html={description} />
 
 		{
+			highlights && (
+				<ul class="pl-5 mb-4 space-y-2 text-base font-normal list-disc text-pretty">
+					{highlights.map((highlight) => (
+						<li set:html={highlight} />
+					))}
+				</ul>
+			)
+		}
+
+		{
 			skills && (
 				<ul class="flex flex-row flex-wrap gap-2">
 					{skills.map((skill) => (
 						<li class="flex items-center content-center gap-x-2 rounded-full dark:bg-gray-800 bg-zinc-200 dark:text-white text-black px-3 py-1 text-xs font-medium transition-transform hover:scale-105">
-							<skill.icon
-								class="size-3"
-								color={skill.color || "currentColor"}
-							/>
+							{skill.icon && (
+								<skill.icon
+									class="size-3"
+									color={skill.color || "currentColor"}
+								/>
+							)}
 							<span>{skill.label || skill.name}</span>
 						</li>
 					))}
