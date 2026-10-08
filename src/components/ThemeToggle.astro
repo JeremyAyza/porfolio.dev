@@ -1,84 +1,47 @@
 ---
-import SunIcon from "./icons/Sun.astro"
-import MoonIcon from "./icons/Moon.astro"
+import Icon from "./Icon.astro"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const t = useTranslations(Astro.props.lang)
 ---
 
-<div class="relative ml-1 mr-1">
-  <button
-    transition:persist
-    id="theme-toggle-btn"
-    class="appearance-none border-none flex hover:scale-110 transition"
-  >
-    <span class="sr-only">Elige el tema</span>
+<button
+  type="button"
+  class="theme-toggle inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors hover:text-ink"
+  data-theme-toggle
+  data-to-light={t("theme.toLight")}
+  data-to-dark={t("theme.toDark")}
+  aria-label={t("theme.toLight")}
+>
+  <Icon name="sun" class="icon-sun" />
+  <Icon name="moon" class="icon-moon" />
+</button>
 
-    <!-- Los íconos se actualizarán dinámicamente usando un script -->
-    <SunIcon
-      id="light"
-      class="theme-toggle-icon size-5 transition-all"
-      style="display: none;"
-    />
-    <MoonIcon
-      id="dark"
-      class="theme-toggle-icon size-5 transition-all"
-      style="display: none;"
-    />
-  </button>
-</div>
 
 <script>
-  enum Theme {
-    Light = "light",
-    Dark = "dark",
-    System = "system",
-  }
-  let currentTheme = Theme.Light // Tema inicial (puede ser Theme.Light o Theme.Dark)
-  const matchMedia = window.matchMedia("(prefers-color-scheme: dark)")
+  const root = document.documentElement
 
-  // Obtener el tema almacenado o el sistema predeterminado
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined") {
-      return (localStorage.getItem("theme") as Theme) ?? Theme.System
-    }
-    return matchMedia.matches ? Theme.Dark : Theme.Light
+  function sync(button: HTMLElement) {
+    const isDark = root.dataset.theme !== "light"
+    button.setAttribute("aria-label", (isDark ? button.dataset.toLight : button.dataset.toDark) ?? "")
   }
 
-  const updateTheme = () => {
-    const themePreference = getThemePreference()
-    const isDark =
-      themePreference === Theme.Dark ||
-      (themePreference === Theme.System && matchMedia.matches)
-
-    // Cambiar el tema de la página
-    document.documentElement.classList[isDark ? "add" : "remove"](Theme.Dark)
-
-    // Actualizar el tema y mostrar el ícono correspondiente
-    currentTheme = themePreference
-
-    // Mostrar el ícono correcto (ocultar los otros)
-    const sunIcon = document.getElementById(Theme.Light) as HTMLElement
-    const moonIcon = document.getElementById(Theme.Dark) as HTMLElement
-
-    if (currentTheme === Theme.Light) {
-      sunIcon.style.display = "block"
-      moonIcon.style.display = "none"
-    } else {
-      sunIcon.style.display = "none"
-      moonIcon.style.display = "block"
-    }
+  for (const button of document.querySelectorAll<HTMLElement>("[data-theme-toggle]")) {
+    sync(button)
+    button.addEventListener("click", () => {
+      const next = root.dataset.theme === "light" ? "dark" : "light"
+      root.dataset.theme = next
+      try {
+        localStorage.setItem("theme", next)
+      } catch {
+        // Sin almacenamiento el tema dura lo que dure la página.
+      }
+      sync(button)
+    })
   }
-
-  updateTheme()
-
-  document.addEventListener("click", (e: any) => {
-    if (!e.target?.closest("#theme-toggle-btn")) {
-      // No hacer nada si el click no es sobre el botón de tema
-      return
-    }
-
-    // Alternar entre light y dark
-    currentTheme = currentTheme === Theme.Light ? Theme.Dark : Theme.Light
-    localStorage.setItem("theme", currentTheme)
-
-    updateTheme()
-  })
 </script>

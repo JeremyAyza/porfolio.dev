@@ -1,0 +1,38 @@
+---
+import Icon from "@/components/Icon.astro"
+import { SITE } from "@/data/site"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const t = useTranslations(Astro.props.lang)
+
+const links = [
+  { label: "GitHub", href: SITE.links.github },
+  { label: "LinkedIn", href: SITE.links.linkedin },
+  { label: t("contact.channel"), href: SITE.links.youtube },
+]
+---
+
+<div class="border-l-4 border-accent pl-5 sm:pl-7">
+  <a
+    class="break-all font-display text-2xl font-bold tracking-tight underline decoration-accent decoration-2 underline-offset-8 hover:text-accent sm:text-4xl"
+    href={`mailto:${SITE.email}`}
+  >
+    {SITE.email}
+  </a>
+  <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+    {
+      links.map((link) => (
+        <li>
+          <a class="link inline-flex min-h-11 items-center gap-1" href={link.href} rel="noopener">
+            {link.label} <Icon name="arrow-up-right" size={16} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

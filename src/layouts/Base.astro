@@ -1,0 +1,77 @@
+---
+import "@/styles/global.css"
+import interUrl from "@/assets/fonts/inter-latin-wght-normal.woff2?url"
+import groteskUrl from "@/assets/fonts/space-grotesk-latin-wght-normal.woff2?url"
+import Footer from "@/components/Footer.astro"
+import Header from "@/components/Header.astro"
+import SearchDialog from "@/components/SearchDialog.astro"
+import Seo from "@/components/Seo.astro"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+  title?: string
+  description?: string
+  image?: string
+  type?: "website" | "article"
+  person?: boolean
+  noindex?: boolean
+}
+
+const { lang, type, person, noindex } = Astro.props
+const t = useTranslations(lang)
+const title = Astro.props.title ? `${Astro.props.title} · Jeremy Ayza` : t("meta.title")
+const description = Astro.props.description ?? t("meta.description")
+const image = Astro.props.image ?? `/og/home-${lang}.png`
+const beaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Fija el tema antes de pintar para que no parpadee.
+      ;(() => {
+        let saved = null
+        try {
+          saved = localStorage.getItem("theme")
+        } catch {}
+        const system = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
+        document.documentElement.dataset.theme = saved === "light" || saved === "dark" ? saved : system
+      })()
+    </script>
+    <Seo lang={lang} title={title} description={description} image={image} type={type} person={person} noindex={noindex} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f8fb" media="(prefers-color-scheme: light)" />
+    <link rel="preload" as="font" type="font/woff2" href={groteskUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={interUrl} crossorigin />
+    {
+      beaconToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: beaconToken })}
+        />
+      )
+    }
+  </head>
+  <body class="min-h-dvh">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:font-medium focus:text-accent-ink"
+    >
+      {t("skip")}
+    </a>
+    <Header lang={lang} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <SearchDialog lang={lang} />
+  </body>
+</html>

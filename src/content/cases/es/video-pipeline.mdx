@@ -1,0 +1,47 @@
+---
+caseId: video-pipeline
+lang: es
+order: 3
+kind: personal
+title: Pipeline de video con IA para YouTube
+summary: Proyecto personal. Extiendo un proyecto open source que genera videos con IA y con él llevo mi canal de YouTube. Bajé el costo por video de unos 2.50 USD a menos de 0.50 USD.
+card:
+  problem: Cada video costaba unos 2.50 USD. Lo más caro eran las imágenes, que se generaban por API.
+  decision: Un solo collage de referencia por escena y, después, generar las imágenes en Google Labs Flow automatizando el navegador.
+  result: El pipeline generó los 190 videos del canal. Cada uno cuesta menos de 0.50 USD.
+period: may 2026 – sep 2026
+status: En uso en mi canal
+stack: [Python, Playwright, Whisper, Gemini, WXT, React, TypeScript]
+links:
+  - label: Canal Hackea Tu Riqueza
+    href: https://www.youtube.com/@Hackea_Tu_Riqueza
+---
+
+import VideoPipelineDiagram from "@/components/diagrams/VideoPipelineDiagram.astro"
+
+## Problema
+
+Extiendo un proyecto open source, AI Content Automation Engine, que ya traía el pipeline de 7 pasos: guion, imágenes, voz, video, subtítulos, música y entrega. El guion, las imágenes, la voz y los subtítulos los hacen modelos de IA. Le sumé 74 commits míos y con él llevo mi canal de YouTube, Hackea Tu Riqueza (finanzas personales).
+
+Cada video costaba unos 2.50 USD. Lo más caro eran las imágenes: se generaban por API con muchas imágenes de referencia.
+
+## Decisión
+
+Bajé el costo de las imágenes en dos pasos:
+
+1. Un solo collage de referencia por escena, en lugar de varias imágenes.
+2. Generación en Google Labs Flow, automatizando el navegador con Playwright y una extensión de Chrome que construí (WXT, React, TypeScript). Es intercambiable con la API de Gemini. En Flow, generar imágenes no gasta créditos.
+
+La extensión procesa en cola un `script.json` de prompts, lee las respuestas de Flow interceptando `fetch` y `XMLHttpRequest`, pausa la cola ante los límites de uso y descarga las imágenes ordenadas por escena.
+
+<VideoPipelineDiagram lang="es" />
+
+También moví Whisper de CPU a GPU (whisper.cpp con CUDA), pasé a modelos más baratos los pasos que no necesitaban un modelo pro y agregué la subida automática a YouTube, que programa cada video en la próxima fecha libre. Además simplifiqué la arquitectura: de hexagonal a una estructura por funcionalidad, acorde al tamaño de la app.
+
+## Resultado
+
+El pipeline generó los 190 videos del canal (octubre de 2026). El costo por video pasó de unos 2.50 USD a menos de 0.50 USD.
+
+## Límite
+
+Solo corre en Windows con GPU NVIDIA y no tiene tests.

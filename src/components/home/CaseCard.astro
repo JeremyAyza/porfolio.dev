@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from "astro:content"
+import Icon from "@/components/Icon.astro"
+import { casePath } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  entry: CollectionEntry<"cases">
+}
+
+const { data } = Astro.props.entry
+const t = useTranslations(data.lang)
+
+const lines = [
+  { label: t("cases.problem"), text: data.card.problem },
+  { label: t("cases.decision"), text: data.card.decision },
+  { label: t("cases.result"), text: data.card.result },
+]
+---
+
+<article
+  class="group relative flex flex-col rounded-xl border border-line bg-surface p-5 transition-colors hover:border-accent sm:p-6"
+  data-case-card={data.caseId}
+>
+  <p class="label">{t(`cases.kind.${data.kind}`)}</p>
+  <h3 class="mt-2 font-display text-xl font-bold leading-snug tracking-tight">
+    <a href={casePath(data.lang, data.caseId)} class="after:absolute after:inset-0 after:rounded-xl">{data.title}</a>
+  </h3>
+  <dl class="mt-5 space-y-4 text-[0.9375rem] leading-snug">
+    {
+      lines.map((line) => (
+        <div>
+          <dt class="font-mono text-xs text-accent">{line.label}</dt>
+          <dd class="mt-1">{line.text}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p class="mt-auto flex items-center gap-2 pt-6 text-sm font-medium text-accent">
+    {t("cases.read")}
+    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+  </p>
+</article>

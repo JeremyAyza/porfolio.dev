@@ -1,49 +1,25 @@
 ---
-import Layout from "@/layouts/Layout.astro"
+import { SITE } from "@/data/site"
+import { DEFAULT_LANG, homePath } from "@/i18n/routes"
 
-import AboutMe from "@/components/AboutMe.astro"
-import Briefcase from "@/components/icons/Briefcase.astro"
-import CodeIcon from "@/components/icons/Code.astro"
-import Experience from "@/components/Experience.astro"
-import ProfileCheck from "@/components/icons/ProfileCheck.astro"
-import Projects from "@/components/Projects.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
-import Hero from "@/components/Hero.astro"
-import TitleSection from "@/components/TitleSection.astro"
+// La raíz solo redirige al idioma principal. Astro.redirect() espera 2 segundos en un sitio
+// estático, así que la página se escribe a mano para que el salto sea inmediato.
+const target = homePath(DEFAULT_LANG)
 ---
 
-<Layout
-  title="Jeremy Ayza · Frontend & Full Stack Developer"
-  description="Frontend & Full Stack Developer en Lima, Perú. Construyo productos en React y TypeScript que siguen funcionando sin internet, y las funciones con LLM que llevan dentro: RAG, agentes de IA y búsqueda por voz."
->
-  <main class="px-4" id="inicio">
-    <SectionContainer class="py-16 md:py-36">
-      <Hero />
-    </SectionContainer>
-  </main>
-  <div class="space-y-24">
-    <SectionContainer id="experiencia">
-      <TitleSection>
-        <Briefcase class="size-8" />
-        Experiencia laboral
-      </TitleSection>
-      <Experience />
-    </SectionContainer>
-
-    <SectionContainer id="proyectos">
-      <TitleSection>
-        <CodeIcon class="size-7" />
-        Proyectos
-      </TitleSection>
-      <Projects />
-    </SectionContainer>
-
-    <SectionContainer id="sobre-mi">
-      <TitleSection>
-        <ProfileCheck class="size-8" />
-        Sobre mí
-      </TitleSection>
-      <AboutMe />
-    </SectionContainer>
-  </div>
-</Layout>
+<!doctype html>
+<html lang={DEFAULT_LANG}>
+  <head>
+    <meta charset="utf-8" />
+    <title>{SITE.name}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(target, Astro.site).href} />
+    <script is:inline define:vars={{ target }}>
+      location.replace(target + location.search + location.hash)
+    </script>
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+  </head>
+  <body>
+    <a href={target}>{SITE.name}</a>
+  </body>
+</html>

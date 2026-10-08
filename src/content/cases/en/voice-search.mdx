@@ -1,0 +1,45 @@
+---
+caseId: voice-search
+lang: en
+order: 2
+kind: work
+title: Voice search with embeddings in the browser
+summary: Voice search for products in the sale flow of a POS. The vector search runs in the browser, on the catalog the POS already keeps there.
+card:
+  problem: Finding a product by voice during a sale has to be fast, without one more service to pay for.
+  decision: The vector search runs in the browser, on the catalog the POS already keeps there.
+  result: Live in production, behind a per-company switch.
+period: Mar 2026 – May 2026
+status: Live in production, behind a per-company switch
+stack: [Transformers.js, Orama, Web Worker, gpt-4o-mini, GA4]
+---
+
+import VoiceSearchDiagram from "@/components/diagrams/VoiceSearchDiagram.astro"
+
+## Problem
+
+The POS needed voice search for products in the sale flow, used with the company's in-store hardware. During a sale, the search has to answer fast.
+
+## Decision
+
+The flow has four steps: audio, transcription (`gpt-4o-mini-transcribe`), vector search for candidates, and product choice with `gpt-4o-mini`.
+
+I decided to run the vector search in the browser, for three reasons:
+
+- **Speed.** There is no network trip for each search.
+- **Cost.** There is no embeddings service or vector database to pay for or maintain.
+- **The catalog was already there.** The POS keeps it in the browser to sell offline.
+
+<VoiceSearchDiagram lang="en" />
+
+The embeddings (`all-MiniLM-L6`) are computed with Transformers.js in a Web Worker. The index is an Orama index stored in the browser.
+
+## Result
+
+It handles several products in one command, tracks usage with GA4 and loads only for companies that have it turned on. It is live in production, behind a per-company switch.
+
+The search on this portfolio uses the same idea: open it from the header.
+
+## Limit
+
+Transcription and product choice need a connection. Only the vector search is local.

@@ -1,0 +1,87 @@
+---
+import DiagramFigure from "./DiagramFigure.astro"
+import type { Lang } from "@/i18n/routes"
+
+interface Props {
+  lang: Lang
+}
+
+const LABELS = {
+  es: {
+    caption: "Los cuatro pasos. Solo la búsqueda vectorial corre en el navegador.",
+    desc: "Flujo de cuatro pasos: audio, transcripción con gpt-4o-mini-transcribe, búsqueda vectorial de candidatos y elección del producto con gpt-4o-mini. La búsqueda vectorial corre en el navegador, en un Web Worker, con Transformers.js y un índice Orama. La transcripción y la elección del producto necesitan conexión.",
+    audio: "Audio",
+    audioSub: "comando de voz",
+    transcription: "Transcripción",
+    search: "Búsqueda vectorial",
+    index: "Web Worker · índice Orama",
+    candidates: "candidatos",
+    choice: "Elección del producto",
+    online: "necesita conexión",
+    local: "en el navegador",
+  },
+  en: {
+    caption: "The four steps. Only the vector search runs in the browser.",
+    desc: "A flow with four steps: audio, transcription with gpt-4o-mini-transcribe, vector search for candidates, and product choice with gpt-4o-mini. The vector search runs in the browser, in a Web Worker, with Transformers.js and an Orama index. Transcription and product choice need a connection.",
+    audio: "Audio",
+    audioSub: "voice command",
+    transcription: "Transcription",
+    search: "Vector search",
+    index: "Web Worker · Orama index",
+    candidates: "candidates",
+    choice: "Product choice",
+    online: "needs connection",
+    local: "in the browser",
+  },
+} as const
+
+const l = LABELS[Astro.props.lang]
+---
+
+<DiagramFigure caption={l.caption}>
+  <svg
+    class="dg mx-auto h-auto w-full max-w-[23rem]"
+    viewBox="0 0 320 434"
+    role="img"
+    aria-labelledby="dg-voice-title dg-voice-desc"
+  >
+    <title id="dg-voice-title">{l.caption}</title>
+    <desc id="dg-voice-desc">{l.desc}</desc>
+    <defs>
+      <marker id="dg-voice-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 10 5 0 10z" class="dg-head"></path>
+      </marker>
+    </defs>
+
+    <g text-anchor="middle">
+      <rect class="dg-box" x="22" y="8" width="276" height="50" rx="8"></rect>
+      <text class="dg-t" x="160" y="30">{l.audio}</text>
+      <text class="dg-s" x="160" y="47">{l.audioSub}</text>
+
+      <path class="dg-wire" d="M160 58V84" marker-end="url(#dg-voice-arrow)"></path>
+
+      <rect class="dg-box" x="22" y="86" width="276" height="66" rx="8"></rect>
+      <text class="dg-t" x="160" y="108">{l.transcription}</text>
+      <text class="dg-s" x="160" y="125">gpt-4o-mini-transcribe</text>
+      <text class="dg-s" x="160" y="141">{l.online}</text>
+
+      <path class="dg-wire" d="M160 152V190" marker-end="url(#dg-voice-arrow)"></path>
+
+      <rect class="dg-zone" x="6" y="174" width="308" height="118" rx="10"></rect>
+      <rect class="dg-box-accent" x="22" y="192" width="276" height="72" rx="8"></rect>
+      <text class="dg-t" x="160" y="215">{l.search}</text>
+      <text class="dg-s" x="160" y="234">all-MiniLM-L6 · Transformers.js</text>
+      <text class="dg-s" x="160" y="250">{l.index}</text>
+
+      <path class="dg-wire" d="M160 264V332" marker-end="url(#dg-voice-arrow)"></path>
+
+      <rect class="dg-box" x="22" y="334" width="276" height="66" rx="8"></rect>
+      <text class="dg-t" x="160" y="356">{l.choice}</text>
+      <text class="dg-s" x="160" y="373">gpt-4o-mini</text>
+      <text class="dg-s" x="160" y="389">{l.online}</text>
+    </g>
+
+    <text class="dg-a" x="22" y="282">{l.local}</text>
+    <text class="dg-s" x="172" y="316">{l.candidates}</text>
+  </svg>
+</DiagramFigure>

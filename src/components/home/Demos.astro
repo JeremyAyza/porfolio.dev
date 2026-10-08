@@ -1,0 +1,36 @@
+---
+import Icon from "@/components/Icon.astro"
+import OfflineStatus from "@/components/OfflineStatus.astro"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<div class="grid gap-5 md:grid-cols-2">
+  <div class="rounded-xl border border-line bg-surface p-5 sm:p-6">
+    <h3 class="flex items-center gap-2.5 font-display text-lg font-bold">
+      <Icon name="wifi-off" class="text-accent" />
+      {t("demos.offline.title")}
+    </h3>
+    <p class="mt-2 text-[0.9375rem] text-muted">{t("demos.offline.body")}</p>
+    <div class="mt-4"><OfflineStatus lang={lang} /></div>
+  </div>
+
+  <div class="rounded-xl border border-line bg-surface p-5 sm:p-6">
+    <h3 class="flex items-center gap-2.5 font-display text-lg font-bold">
+      <Icon name="search" class="text-accent" />
+      {t("demos.search.title")}
+    </h3>
+    <p class="mt-2 text-[0.9375rem] text-muted">{t("demos.search.body")}</p>
+    <button type="button" class="btn mt-4" data-search-open>
+      {t("demos.search.cta")}
+      <Icon name="arrow-right" size={16} />
+    </button>
+  </div>
+</div>

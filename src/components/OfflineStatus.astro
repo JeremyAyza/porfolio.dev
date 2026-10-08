@@ -1,0 +1,81 @@
+---
+import type { Lang } from "@/i18n/routes"
+import { clientStrings, useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<p
+  class="offline-status flex items-center gap-2 font-mono text-xs text-muted"
+  data-offline-status
+  data-state="pending"
+  data-strings={JSON.stringify(clientStrings(lang, "offline."))}
+  role="status"
+>
+  <span class="dot" aria-hidden="true"></span>
+  <span data-offline-text>{t("offline.pending")}</span>
+</p>
+
+<style>
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: none;
+    border-radius: 999px;
+    border: 1.5px solid var(--muted);
+  }
+
+  [data-state="ready"] .dot {
+    border-color: var(--accent);
+    background-color: var(--accent);
+  }
+
+  [data-state="offline"] .dot {
+    border-color: var(--ink);
+    background-color: var(--ink);
+  }
+</style>
+
+<script>
+  type State = "pending" | "ready" | "offline" | "unsupported" | "dev"
+
+  const nodes = [...document.querySelectorAll<HTMLElement>("[data-offline-status]")]
+
+  function show(state: State) {
+    for (const node of nodes) {
+      const strings: Record<string, string> = JSON.parse(node.dataset.strings ?? "{}")
+      node.dataset.state = state
+      const text = node.querySelector("[data-offline-text]")
+      if (text) text.textContent = strings[`offline.${state}`] ?? ""
+    }
+  }
+
+  async function start() {
+    if (!("serviceWorker" in navigator)) return show("unsupported")
+    // En desarrollo no existe sw.js: lo genera el build.
+    if (import.meta.env.DEV) return show("dev")
+
+    let saved = false
+    const refresh = () => show(!navigator.onLine ? "offline" : saved ? "ready" : "pending")
+    addEventListener("online", refresh)
+    addEventListener("offline", refresh)
+    refresh()
+
+    try {
+      await navigator.serviceWorker.register("/sw.js")
+      // `ready` se resuelve cuando el service worker terminó de guardar los archivos.
+      await navigator.serviceWorker.ready
+      saved = true
+      refresh()
+    } catch {
+      show("unsupported")
+    }
+  }
+
+  start()
+</script>

@@ -1,113 +1,62 @@
 ---
+import Icon from "./Icon.astro"
+import LangSwitch from "./LangSwitch.astro"
 import ThemeToggle from "./ThemeToggle.astro"
+import { SITE } from "@/data/site"
+import { SECTION_IDS, homePath, type Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
 
-const navItems = [
-  {
-    title: "Inicio",
-    label: "inicio",
-    url: "/#inicio",
-  },
-  {
-    title: "Experiencia",
-    label: "experiencia",
-    url: "/#experiencia",
-  },
-  {
-    title: "Proyectos",
-    label: "proyectos",
-    url: "/#proyectos",
-  },
-  {
-    title: "Sobre mí",
-    label: "sobre-mi",
-    url: "/#sobre-mi",
-  },
+interface Props {
+  lang: Lang
+}
 
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const home = homePath(lang)
+const ids = SECTION_IDS[lang]
+
+const links = [
+  { href: `${home}#${ids.cases}`, label: t("nav.cases") },
+  { href: `${home}#${ids.experience}`, label: t("nav.experience") },
+  { href: `${home}#${ids.work}`, label: t("nav.work") },
+  { href: `${home}#${ids.contact}`, label: t("nav.contact") },
 ]
 ---
 
-<header
-  class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2"
->
-  <nav
-    class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
-  >
-    {
-      navItems.map((link) => (
-        <a
-          class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-500"
-          aria-label={link.label}
-          href={link.url}
-        >
-          {link.title}
-        </a>
-      ))
-    }
-    <ThemeToggle />
-  </nav>
-</header>
+<header class="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-[1080px] items-center justify-between gap-3 px-5 sm:px-8">
+    <a href={home} class="flex min-h-11 items-center gap-2.5 font-display text-lg font-bold tracking-tight">
+      <span class="h-5 w-1 bg-accent" aria-hidden="true"></span>
+      {SITE.name}
+    </a>
 
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const sections = document.querySelectorAll("section")
-    const navItems = document.querySelectorAll("header nav a")
-
-    const callback = (entries: any[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute("aria-label") == entry.target.id) {
-              item.classList.add("text-blue-500")
-            } else {
-              item.classList.remove("text-blue-500")
-            }
-          })
+    <nav aria-label={t("nav.label")} class="hidden md:block">
+      <ul class="flex items-center gap-6 font-mono text-sm text-muted">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} class="inline-flex min-h-11 items-center transition-colors hover:text-ink">
+                {link.label}
+              </a>
+            </li>
+          ))
         }
-      })
-    }
+      </ul>
+    </nav>
 
-    // La sección activa es la que cruza el centro de la pantalla. Con un
-    // threshold fijo, una sección más alta que la pantalla nunca se marcaba.
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: "-50% 0px -50% 0px",
-      threshold: 0,
-    })
-
-    sections.forEach((section) => {
-      observer.observe(section)
-    })
-
-    // Cleanup function
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === "hidden") {
-        observer.disconnect()
-      } else {
-        sections.forEach((section) => {
-          observer.observe(section)
-        })
-      }
-    }
-  })
-</script>
-
-<style>
-  nav {
-    animation: nav-shadown 1s linear both;
-    animation-timeline: scroll();
-    animation-range: 0 100px;
-  }
-
-  nav {
-    @apply dark:bg-gray-800/90 bg-white/50;
-  }
-
-  @keyframes nav-shadown {
-    0% {
-      @apply dark:bg-gray-800/0 bg-white/0;
-    }
-    to {
-      @apply shadow-lg ring-1 backdrop-blur ring-white/10;
-    }
-  }
-</style>
+    <div class="flex items-center gap-1">
+      <button
+        type="button"
+        data-search-open
+        class="inline-flex h-11 items-center gap-2 rounded-lg px-2.5 font-mono text-sm text-muted transition-colors hover:text-ink"
+      >
+        <Icon name="search" />
+        <span class="hidden sm:inline">{t("search.open")}</span>
+        <kbd class="hidden rounded border border-line px-1.5 text-xs lg:inline" aria-hidden="true">/</kbd>
+        <span class="sr-only sm:hidden">{t("search.open")}</span>
+      </button>
+      <LangSwitch lang={lang} />
+      <ThemeToggle lang={lang} />
+    </div>
+  </div>
+</header>

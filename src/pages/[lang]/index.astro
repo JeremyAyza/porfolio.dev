@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content"
+import CaseCard from "@/components/home/CaseCard.astro"
+import Contact from "@/components/home/Contact.astro"
+import Demos from "@/components/home/Demos.astro"
+import ExperienceList from "@/components/home/ExperienceList.astro"
+import Figures from "@/components/home/Figures.astro"
+import Hero from "@/components/home/Hero.astro"
+import SectionHeading from "@/components/home/SectionHeading.astro"
+import WorkList from "@/components/home/WorkList.astro"
+import Base from "@/layouts/Base.astro"
+import { LOCALES, SECTION_IDS, type Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }))
+}
+
+const lang = Astro.params.lang as Lang
+const t = useTranslations(lang)
+const ids = SECTION_IDS[lang]
+const cases = (await getCollection("cases", ({ data }) => data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+)
+const section = "mx-auto max-w-[1080px] scroll-mt-20 px-5 pt-20 sm:px-8 sm:pt-24"
+---
+
+<Base lang={lang} person>
+  <Hero lang={lang} />
+  <Figures lang={lang} />
+
+  <section id={ids.cases} class={section} aria-labelledby={`${ids.cases}-title`}>
+    <div id={`${ids.cases}-title`}><SectionHeading index="01" title={t("cases.title")} /></div>
+    <div class="mt-8 grid gap-5 lg:grid-cols-3">
+      {cases.map((entry) => <CaseCard entry={entry} />)}
+    </div>
+  </section>
+
+  <section id={ids.demos} class={section} aria-labelledby={`${ids.demos}-title`}>
+    <div id={`${ids.demos}-title`}><SectionHeading index="02" title={t("demos.title")} /></div>
+    <div class="mt-8"><Demos lang={lang} /></div>
+  </section>
+
+  <section id={ids.experience} class={section} aria-labelledby={`${ids.experience}-title`}>
+    <div id={`${ids.experience}-title`}><SectionHeading index="03" title={t("experience.title")} /></div>
+    <div class="mt-8"><ExperienceList lang={lang} /></div>
+  </section>
+
+  <section id={ids.work} class={section} aria-labelledby={`${ids.work}-title`}>
+    <div id={`${ids.work}-title`}><SectionHeading index="04" title={t("work.title")} /></div>
+    <div class="mt-8"><WorkList lang={lang} /></div>
+  </section>
+
+  <section id={ids.contact} class={section} aria-labelledby={`${ids.contact}-title`}>
+    <div id={`${ids.contact}-title`}><SectionHeading index="05" title={t("contact.title")} /></div>
+    <div class="mt-8"><Contact lang={lang} /></div>
+  </section>
+</Base>
