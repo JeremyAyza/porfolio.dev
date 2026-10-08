@@ -9,7 +9,6 @@ import {
   MODEL_ID,
   MODEL_PATH,
   ORT_FILES,
-  ORT_PATH,
   indexUrl,
   type SearchIndex,
   type WorkerRequest,
@@ -22,10 +21,6 @@ env.allowLocalModels = true
 env.localModelPath = MODEL_PATH
 env.useBrowserCache = false
 env.useWasmCache = false
-if (env.backends.onnx.wasm) {
-  env.backends.onnx.wasm.wasmPaths = { mjs: ORT_PATH + ORT_FILES.mjs, wasm: ORT_PATH + ORT_FILES.wasm }
-  env.backends.onnx.wasm.numThreads = 1
-}
 
 const LIMIT = 5
 const EXCERPT_LENGTH = 150
@@ -63,6 +58,10 @@ async function embed(text: string): Promise<number[]> {
 async function init(lang: string) {
   const started = performance.now()
   const index: SearchIndex = await (await fetch(indexUrl(lang))).json()
+  if (env.backends.onnx.wasm) {
+    env.backends.onnx.wasm.wasmPaths = { mjs: index.ortPath + ORT_FILES.mjs, wasm: index.ortPath + ORT_FILES.wasm }
+    env.backends.onnx.wasm.numThreads = 1
+  }
 
   extractor = await pipeline("feature-extraction", MODEL_ID, {
     device: "wasm",

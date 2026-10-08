@@ -4,7 +4,9 @@ import { join, relative, sep } from "node:path"
 import { fileURLToPath } from "node:url"
 
 // No se guardan por adelantado: se sirven desde la red o se guardan al usarlos.
-const SKIP = [/^sw\.js$/, /^index\.html$/, /^sitemap-/, /^robots\.txt$/, /^_headers$/, /^_redirects$/, /^og\//, /^models\//, /^ort\//]
+const SKIP = [/^sw\.js$/, /^index\.html$/, /^sitemap-/, /^robots\.txt$/, /^_headers$/, /^_redirects$/, /^og\//]
+// Modelo y motor wasm del buscador: se guardan aparte, solo cuando alguien lo usa.
+const HEAVY = /^(models|ort)\//
 const MAX_BYTES = 300 * 1024
 
 async function walk(dir) {
@@ -35,10 +37,15 @@ export default function serviceWorker({ home }) {
         const root = fileURLToPath(dir)
         const hash = createHash("sha256")
         const urls = []
+        const heavy = []
 
         for (const file of (await walk(root)).sort()) {
           const path = relative(root, file).split(sep).join("/")
           if (SKIP.some((pattern) => pattern.test(path))) continue
+          if (HEAVY.test(path)) {
+            heavy.push(toUrl(path))
+            continue
+          }
           if ((await stat(file)).size > MAX_BYTES) continue
           hash.update(path).update(await readFile(file))
           urls.push(toUrl(path))
@@ -51,6 +58,7 @@ export default function serviceWorker({ home }) {
           template
             .replace('"__VERSION__"', JSON.stringify(version))
             .replace("__PRECACHE__", JSON.stringify(urls))
+            .replace("__HEAVY__", JSON.stringify(heavy))
             .replace('"__HOME__"', JSON.stringify(home)),
         )
         logger.info(`sw.js: ${urls.length} archivos, versión ${version}`)

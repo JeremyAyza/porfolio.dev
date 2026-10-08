@@ -54,8 +54,10 @@ export default function searchIndex({ modelId, pages, ortFiles }) {
         for (const file of MODEL_FILES) {
           downloadBytes += await copyInto(join(cacheDir, file), join(out, "models", modelId, file))
         }
+        const ort = join(project, "node_modules/onnxruntime-web")
+        const ortPath = `/ort/${JSON.parse(await readFile(join(ort, "package.json"), "utf8")).version}/`
         for (const file of ortFiles) {
-          downloadBytes += await copyInto(join(project, "node_modules/onnxruntime-web/dist", file), join(out, "ort", file))
+          downloadBytes += await copyInto(join(ort, "dist", file), join(out, ortPath, file))
         }
 
         for (const [lang, urls] of Object.entries(pages)) {
@@ -64,7 +66,7 @@ export default function searchIndex({ modelId, pages, ortFiles }) {
             chunks.push(...extractChunks(await readFile(join(out, url, "index.html"), "utf8"), url))
           }
           await mkdir(join(out, "search"), { recursive: true })
-          await writeFile(join(out, "search", `index-${lang}.json`), JSON.stringify({ downloadBytes, chunks }))
+          await writeFile(join(out, "search", `index-${lang}.json`), JSON.stringify({ downloadBytes, ortPath, chunks }))
           logger.info(`search/index-${lang}.json: ${chunks.length} fragmentos`)
         }
         logger.info(`Descarga del buscador en el navegador: ${(downloadBytes / 1e6).toFixed(1)} MB`)
