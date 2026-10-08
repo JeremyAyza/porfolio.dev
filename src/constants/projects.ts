@@ -2,7 +2,8 @@
 import { SKILLS } from "./skills";
 import type { Project } from "./types";
 const { react, typescript,java, spring, mysql, threejs, tailwind, javascript, html, css, r3, vite, zustand, bootstrap, reactrouter, node, 
-	express, mongo, mongoose, bun, hono, redux, stripe, nextjs, vue } = SKILLS
+	express, mongo, mongoose, bun, hono, redux, stripe, postgresql, nestjs, typeorm, vercelAiSdk, zod, insforge, pgvector, mcp, gpt4oMini,
+	transformersjs, orama, webWorker, ga4, playwright, claudeCode, tanstackQuery, recharts, shadcn, netlify, cloudflarePages, whisper, gemini } = SKILLS
 export const CATEGORIES = {
 	FRONTEND: "Frontend",
 	BACKEND: "Backend",
@@ -11,6 +12,163 @@ export const CATEGORIES = {
 	ALGORITHMICA: "Algorítmica"
 }
 export const PROJECTS: Project[] = [
+	// -------------------------------
+	// Trabajo en CasaMarket (company + featured). Va primero y sin enlaces.
+	// Orden: lo que está en producción o terminado, después lo que sigue en desarrollo.
+	// No se nombran productos sin lanzar ni se dan cifras internas de la empresa.
+	// -------------------------------
+	{
+		title: "Nuevo flujo de venta del POS: capa de dominio y pruebas de paridad",
+		company: "CasaMarket",
+		description:
+			"El POS emite Boleta, Factura y Nota de Venta ante SUNAT para clientes que venden 24/7, así que rehacer su flujo de venta no podía fallar.",
+		link: "",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [react, typescript, playwright, claudeCode],
+		highlights: [
+			"Diseñé una capa de dominio pura y testeable (carrito, pagos, cliente, crédito, impuestos, descuentos) con la venta como caso de uso.",
+			"Ideé la estrategia de paridad: una suite E2E en Playwright ejecuta la misma venta en el POS legacy y en el nuevo, captura los dos payloads y los compara campo por campo, ignorando el ruido conocido (fechas, IDs). Son 12 suites: precisión decimal, tipos de impuesto, descuentos, combos y pagos, entre otras.",
+			"Documenté el límite del método: la paridad no prueba que el cálculo sea correcto. Si los dos sistemas comparten un bug, el test pasa igual.",
+			"Usé Claude Code para auditar el código en paralelo y generar casos de prueba. El alcance, las reglas de negocio y la validación de los hallazgos los definí yo."
+		],
+		categories: [CATEGORIES.FRONTEND],
+		extra: {
+			date: "jun 2026 – actualidad",
+			status: "En producción."
+		}
+	},
+	{
+		title: "Búsqueda de productos por voz en el POS",
+		company: "CasaMarket",
+		description:
+			"Búsqueda de productos por voz para el flujo de venta del POS, usada con el hardware de tienda de la empresa.",
+		link: "",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [transformersjs, orama, webWorker, gpt4oMini, ga4],
+		highlights: [
+			"Flujo: audio → transcripción (gpt-4o-mini-transcribe) → búsqueda vectorial local de candidatos → elección del producto con gpt-4o-mini.",
+			"La búsqueda vectorial corre en el navegador: embeddings all-MiniLM-L6 con Transformers.js en un Web Worker y un índice Orama guardado en el navegador. La transcripción y la elección del producto necesitan conexión.",
+			"Admite varios productos por comando, mide su uso con GA4 y se carga solo para las empresas que lo tienen activado."
+		],
+		categories: [CATEGORIES.FRONTEND],
+		extra: {
+			date: "mar 2026 – may 2026",
+			status: "Desplegada en producción, detrás de una activación por empresa."
+		}
+	},
+	{
+		title: "Netlify → Cloudflare Pages Migrator",
+		company: "CasaMarket",
+		description:
+			"Migrar unos 20 proyectos de Netlify a Cloudflare Pages a mano era lento y riesgoso, sobre todo por la configuración de build y las variables de entorno. Automatizarlo fue idea mía.",
+		link: "",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [node, typescript, netlify, cloudflarePages],
+		highlights: [
+			"Escribí una CLI (Node.js, TypeScript) que lee de la API de Netlify los comandos de build, la carpeta de salida y las variables de producción y preview, crea el proyecto en Cloudflare Pages enlazado a su repo de GitHub y fuerza el primer deploy.",
+			"Guarda el estado para retomar una ejecución interrumpida y registra cada corrida.",
+			"Resultado: unos 20 proyectos migrados (POS, Admin, ACL y landings). Hoy corren ahí 25 proyectos."
+		],
+		categories: [CATEGORIES.BACKEND]
+	},
+	{
+		title: "WeAreData: frontend de una plataforma de analítica retail",
+		company: "CasaMarket",
+		description:
+			"WeAreData es una plataforma de analítica retail: un panel interno para curar los datos y dashboards de analítica. El producto, el diseño y el backend son de otros compañeros. El frontend lo creé yo desde cero.",
+		link: "",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [react, vite, typescript, tanstackQuery, zustand, recharts, shadcn],
+		highlights: [
+			"Definí la arquitectura por funcionalidad, el stack y los patrones. Autor principal: 391 de 546 commits (72%).",
+			"Construí dashboards configurables con Recharts: evolución de mercado y participación por SKU en escala logarítmica, matriz competitiva, mapa interactivo y treemap por distrito, y un explorador de variables que arma consultas por mercado, periodo y producto.",
+			"Rehice el lado administrador en 2026, cuando los requerimientos cambiaron hacia una plataforma configurable: cola de revisión para curar el catálogo, búsqueda de duplicados, edición masiva y categorías con atributos configurables.",
+			"Dejé una regla de dónde vive cada estado: TanStack Query para datos del servidor, nuqs para filtros en la URL, Zustand para la interfaz y react-hook-form para formularios."
+		],
+		categories: [CATEGORIES.FRONTEND],
+		extra: {
+			date: "sep 2025 – actualidad",
+			status: "En desarrollo."
+		}
+	},
+	{
+		title: "Copiloto conversacional para el POS",
+		company: "CasaMarket",
+		description:
+			"Copiloto embebido en el POS. Responderá dudas operativas con RAG y consultará datos de analítica. Escribí el PRD, el SRS y el plan técnico con apoyo de IA, y tomé las decisiones de arquitectura.",
+		link: "",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [nestjs, typescript, postgresql, typeorm, vercelAiSdk, zod, react],
+		highlights: [
+			"Los permisos por rol viven en el código, nunca en el prompt: un guard valida el rol antes de cada llamada a herramientas.",
+			"La analítica se consulta solo por tool calling con esquemas Zod. El proveedor de LLM se cambia por configuración.",
+			"Lo construyo orquestando agentes de código con un protocolo que diseñé: un worktree por ticket, olas en paralelo solo si los tickets no tocan los mismos archivos y un documento de contratos de integración. Una corrida entregó 7 tickets en unas 3 horas con 34 tests pasando. El código lo escribieron los agentes; la planificación, la integración y la verificación fueron mías."
+		],
+		categories: [CATEGORIES.FULLSTACK],
+		extra: {
+			date: "sep 2026 – actualidad",
+			status: "En desarrollo."
+		}
+	},
+	{
+		title: "RAG del conocimiento interno",
+		company: "CasaMarket",
+		description:
+			"El conocimiento de cómo funciona el sistema estaba repartido entre personas, videos, código y documentos. Empecé por iniciativa propia un RAG para colaboradores nuevos, soporte y desarrolladores. Después dio origen a un proyecto formal: el copiloto conversacional.",
+		link: "",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [insforge, postgresql, pgvector, mcp, gpt4oMini],
+		highlights: [
+			"Lo construí sobre InsForge (Postgres, pgvector, edge functions), con agentes de IA trabajando a través de su servidor MCP.",
+			"Responde en tres pasos: gpt-4o-mini decide a qué módulo de negocio pertenece la pregunta; la búsqueda por similitud (pgvector, índice HNSW) corre solo dentro de ese módulo; el umbral y la cantidad de resultados se ajustan según si detectó el módulo.",
+			"Cada respuesta cita su fuente: la ruta exacta en cada plataforma o el video con su minuto."
+		],
+		categories: [CATEGORIES.FULLSTACK],
+		extra: {
+			date: "ago 2026 – actualidad",
+			status: "En desarrollo."
+		}
+	},
+
+	// -------------------------------
+	// Proyectos personales. El destacado (featured, sin company) va con el detalle completo;
+	// el resto va en tarjetas. Solo se muestran los que tienen repositorio público o enlace;
+	// los demás quedan con hidden: true.
+	// -------------------------------
+	{
+		title: "Pipeline de video con IA para YouTube",
+		description:
+			"Extiendo un proyecto open source (AI Content Automation Engine) que ya traía el pipeline de 7 pasos: guion, imágenes, voz, video, subtítulos, música y entrega. El guion, las imágenes, la voz y los subtítulos los hacen modelos de IA. Le sumé 74 commits míos y con él llevo mi canal de YouTube, Hackea Tu Riqueza.",
+		link: "https://www.youtube.com/@Hackea_Tu_Riqueza",
+		linkLabel: "Canal",
+		github: "",
+		image: "",
+		featured: true,
+		skills: [playwright, typescript, react, whisper, gemini],
+		highlights: [
+			"El pipeline generó los 190 videos del canal (oct 2026).",
+			"El costo por video pasó de unos 2.50 USD a menos de 0.50 USD. Lo más caro eran las imágenes, que se generaban por API con muchas imágenes de referencia.",
+			"Bajé ese costo en dos pasos: un solo collage de referencia por escena y, después, generación en Google Labs Flow automatizando el navegador con Playwright y una extensión de Chrome que construí (WXT, React, TypeScript), intercambiable con la API de Gemini. En Flow generar imágenes no gasta créditos.",
+			"Moví Whisper de CPU a GPU (whisper.cpp con CUDA), pasé a modelos más baratos los pasos que no necesitaban un modelo pro y agregué la subida automática a YouTube, que programa cada video en la próxima fecha libre."
+		],
+		categories: [CATEGORIES.FULLSTACK],
+		extra: {
+			date: "may 2026 – sep 2026",
+			status: "En uso en mi canal. Solo corre en Windows con GPU NVIDIA y no tiene tests."
+		}
+	},
 	{
     title: "Minecraft Clone – 3D World Builder con React Three Fiber",
     description:
@@ -98,20 +256,6 @@ export const PROJECTS: Project[] = [
       demoVideo: "!!!"
     }
   },
-	{
-		title: "AdventJS - Retos de programación con JavaScript y TypeScript",
-		description:
-			"Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
-		link: "https://adventjs.dev",
-		image: "/projects/adventjs.webp",
-		categories: [CATEGORIES.FRONTEND],
-		github: "https://github.com/JeremyAyza/adventjs",
-		skills: [react, nextjs, vue]
-	},
-  // -------------------------------
-  // 1. Minecraft Clone (React Three Fiber)
-  // -------------------------------
-  
 
   // -------------------------------
   // 2. Sales Management Dashboard (React + Bootstrap)
@@ -184,10 +328,10 @@ export const PROJECTS: Project[] = [
     description:
       "API REST completa para gestionar inventario, clientes, productos, ventas y usuarios. Construida con Express y MongoDB.",
     link: "!!!",
-    github: "https://github.com/JeremyAyza/inventory-management-api",
+    github: "!!!", // el repositorio no es público (responde 404)
     image: "!!!",
     level: "intermedio",
-    hidden: false,
+    hidden: true,
     skills: [node, express, mongo, mongoose],
     features: [
       "CRUD completo para productos, clientes y ventas",
@@ -216,10 +360,10 @@ export const PROJECTS: Project[] = [
     description:
       "Colección de soluciones a los 25 retos oficiales de AdventJS 2021. Enfoque en optimización, lógica y estructuras de datos.",
     link: "https://2021.adventjs.dev",
-    github: "https://github.com/JeremyAyza/AdventJS-2021",
+    github: "!!!", // el repositorio no es público (responde 404)
     image: "!!!",
     level: "intermedio",
-    hidden: false,
+    hidden: true,
     skills: [javascript],
     features: [
       "25 retos completados",
@@ -249,7 +393,7 @@ export const PROJECTS: Project[] = [
     github: "!!!",
     image: "!!!",
     level: "avanzado",
-    hidden: false,
+    hidden: true,
     skills: [bun, hono, typescript],
     features: [
       "Scraping sin puppeteer (solo Fetch + HTML parsing)",
@@ -311,7 +455,7 @@ export const PROJECTS: Project[] = [
     github: "!!!",
     image: "!!!",
     level: "avanzado",
-    hidden: false,
+    hidden: true,
     skills: [react, redux, node, express, mongo, stripe],
     features: [
       "Autenticación JWT + roles",

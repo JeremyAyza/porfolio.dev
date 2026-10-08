@@ -66,10 +66,12 @@ const navItems = [
       })
     }
 
+    // La sección activa es la que cruza el centro de la pantalla. Con un
+    // threshold fijo, una sección más alta que la pantalla nunca se marcaba.
     const observer = new IntersectionObserver(callback, {
       root: null,
-      rootMargin: "0px",
-      threshold: 0.3,
+      rootMargin: "-50% 0px -50% 0px",
+      threshold: 0,
     })
 
     sections.forEach((section) => {

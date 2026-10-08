@@ -8,10 +8,13 @@ export interface Project {
 	title: string;
 	description: string;
 	link: string;
+	linkLabel?: string;
 	github: string;
 	image: string;
 	level?: string;
 	hidden?: boolean;
+	featured?: boolean;
+	company?: string;
 	skills: Skill[];
 	features?: string[];
 	highlights?: string[];
