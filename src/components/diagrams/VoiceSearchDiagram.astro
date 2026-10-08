@@ -14,11 +14,11 @@ const LABELS = {
     audioSub: "comando de voz",
     transcription: "Transcripción",
     search: "Búsqueda vectorial",
-    index: "índice Orama",
+    index: "Web Worker · índice Orama",
     candidates: "candidatos",
     choice: "Elección del producto",
     online: "necesita conexión",
-    local: ["en el navegador", "(Web Worker)"],
+    local: "en el navegador",
   },
   en: {
     caption: "The four steps. Only the vector search runs in the browser.",
@@ -27,11 +27,11 @@ const LABELS = {
     audioSub: "voice command",
     transcription: "Transcription",
     search: "Vector search",
-    index: "Orama index",
+    index: "Web Worker · Orama index",
     candidates: "candidates",
     choice: "Product choice",
     online: "needs connection",
-    local: ["in the browser", "(Web Worker)"],
+    local: "in the browser",
   },
 } as const
 
@@ -40,8 +40,8 @@ const l = LABELS[Astro.props.lang]
 
 <DiagramFigure caption={l.caption}>
   <svg
-    class="dg mx-auto h-auto w-full max-w-[30rem]"
-    viewBox="0 0 440 380"
+    class="dg mx-auto h-auto w-full max-w-[23rem]"
+    viewBox="0 0 320 434"
     role="img"
     aria-labelledby="dg-voice-title dg-voice-desc"
   >
@@ -54,35 +54,34 @@ const l = LABELS[Astro.props.lang]
     </defs>
 
     <g text-anchor="middle">
-      <rect class="dg-box" x="30" y="8" width="270" height="50" rx="8"></rect>
-      <text class="dg-t" x="165" y="30">{l.audio}</text>
-      <text class="dg-s" x="165" y="47">{l.audioSub}</text>
+      <rect class="dg-box" x="22" y="8" width="276" height="50" rx="8"></rect>
+      <text class="dg-t" x="160" y="30">{l.audio}</text>
+      <text class="dg-s" x="160" y="47">{l.audioSub}</text>
 
-      <path class="dg-wire" d="M165 58V84" marker-end="url(#dg-voice-arrow)"></path>
+      <path class="dg-wire" d="M160 58V84" marker-end="url(#dg-voice-arrow)"></path>
 
-      <rect class="dg-box" x="30" y="86" width="270" height="50" rx="8"></rect>
-      <text class="dg-t" x="165" y="108">{l.transcription}</text>
-      <text class="dg-s" x="165" y="125">gpt-4o-mini-transcribe</text>
+      <rect class="dg-box" x="22" y="86" width="276" height="66" rx="8"></rect>
+      <text class="dg-t" x="160" y="108">{l.transcription}</text>
+      <text class="dg-s" x="160" y="125">gpt-4o-mini-transcribe</text>
+      <text class="dg-s" x="160" y="141">{l.online}</text>
 
-      <path class="dg-wire" d="M165 136V190" marker-end="url(#dg-voice-arrow)"></path>
+      <path class="dg-wire" d="M160 152V190" marker-end="url(#dg-voice-arrow)"></path>
 
-      <rect class="dg-zone" x="14" y="172" width="302" height="110" rx="10"></rect>
-      <rect class="dg-box-accent" x="30" y="192" width="270" height="72" rx="8"></rect>
-      <text class="dg-t" x="165" y="215">{l.search}</text>
-      <text class="dg-s" x="165" y="234">all-MiniLM-L6 · Transformers.js</text>
-      <text class="dg-s" x="165" y="250">{l.index}</text>
+      <rect class="dg-zone" x="6" y="174" width="308" height="118" rx="10"></rect>
+      <rect class="dg-box-accent" x="22" y="192" width="276" height="72" rx="8"></rect>
+      <text class="dg-t" x="160" y="215">{l.search}</text>
+      <text class="dg-s" x="160" y="234">all-MiniLM-L6 · Transformers.js</text>
+      <text class="dg-s" x="160" y="250">{l.index}</text>
 
-      <path class="dg-wire" d="M165 264V318" marker-end="url(#dg-voice-arrow)"></path>
+      <path class="dg-wire" d="M160 264V332" marker-end="url(#dg-voice-arrow)"></path>
 
-      <rect class="dg-box" x="30" y="320" width="270" height="50" rx="8"></rect>
-      <text class="dg-t" x="165" y="342">{l.choice}</text>
-      <text class="dg-s" x="165" y="359">gpt-4o-mini</text>
+      <rect class="dg-box" x="22" y="334" width="276" height="66" rx="8"></rect>
+      <text class="dg-t" x="160" y="356">{l.choice}</text>
+      <text class="dg-s" x="160" y="373">gpt-4o-mini</text>
+      <text class="dg-s" x="160" y="389">{l.online}</text>
     </g>
 
-    <text class="dg-s" x="312" y="115">{l.online}</text>
-    <text class="dg-a" x="326" y="224">{l.local[0]}</text>
-    <text class="dg-a" x="326" y="240">{l.local[1]}</text>
-    <text class="dg-s" x="177" y="304">{l.candidates}</text>
-    <text class="dg-s" x="312" y="349">{l.online}</text>
+    <text class="dg-a" x="22" y="282">{l.local}</text>
+    <text class="dg-s" x="172" y="316">{l.candidates}</text>
   </svg>
 </DiagramFigure>

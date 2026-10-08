@@ -54,14 +54,25 @@ const LABELS: Record<Lang, { caption: string; desc: string; original: string; ch
 }
 
 const l = LABELS[Astro.props.lang]
-const PITCH = 72
-const TOP = 32
+
+// Los pasos van apilados. Los que cambié son más altos porque llevan el cambio adentro.
+const PLAIN = 44
+const CHANGED = 88
+const GAP = 18
+let cursor = 30
+const rows = l.steps.map((step, index) => {
+  const y = cursor
+  const height = step.change ? CHANGED : PLAIN
+  cursor += height + GAP
+  return { ...step, y, height, number: String(index + 1).padStart(2, "0") }
+})
+const totalHeight = cursor - GAP + 8
 ---
 
 <DiagramFigure caption={l.caption}>
   <svg
-    class="dg mx-auto h-auto w-full max-w-[30rem]"
-    viewBox="0 0 440 524"
+    class="dg mx-auto h-auto w-full max-w-[23rem]"
+    viewBox={`0 0 320 ${totalHeight}`}
     role="img"
     aria-labelledby="dg-video-title dg-video-desc"
   >
@@ -73,30 +84,26 @@ const TOP = 32
       </marker>
     </defs>
 
-    <text class="dg-s" x="6" y="18">{l.original}</text>
-    <text class="dg-a" x="222" y="18">{l.changed}</text>
+    <text class="dg-s" x="6" y="16">{l.original}</text>
+    <text class="dg-a" x="314" y="16" text-anchor="end">{l.changed}</text>
 
     {
-      l.steps.map((step, index) => {
-        const y = TOP + index * PITCH
-        return (
-          <g>
-            {index > 0 && <path class="dg-wire" d={`M105 ${y - 20}V${y - 2}`} marker-end="url(#dg-video-arrow)" />}
-            <rect class="dg-box" x="6" y={y} width="198" height="52" rx="8" />
-            <text class="dg-s" x="20" y={y + 31}>{String(index + 1).padStart(2, "0")}</text>
-            <text class="dg-t" x="48" y={step.sub ? y + 23 : y + 31}>{step.name}</text>
-            {step.sub && <text class="dg-s" x="48" y={y + 40}>{step.sub}</text>}
-            {step.change && (
-              <>
-                <path class="dg-wire" d={`M204 ${y + 26}H222`} />
-                <rect class="dg-box-accent" x="222" y={y} width="212" height="52" rx="8" />
-                <text class="dg-t" x="234" y={y + 23}>{step.change.title}</text>
-                <text class="dg-s" x="234" y={y + 40}>{step.change.sub}</text>
-              </>
-            )}
-          </g>
-        )
-      })
+      rows.map((row, index) => (
+        <g>
+          {index > 0 && <path class="dg-wire" d={`M160 ${row.y - GAP}V${row.y - 2}`} marker-end="url(#dg-video-arrow)" />}
+          <rect class={row.change ? "dg-box-accent" : "dg-box"} x="6" y={row.y} width="308" height={row.height} rx="8" />
+          <text class="dg-s" x="20" y={row.y + 27}>{row.number}</text>
+          <text class="dg-t" x="48" y={row.sub ? row.y + 20 : row.y + 27}>{row.name}</text>
+          {row.sub && <text class="dg-s" x="48" y={row.y + 36}>{row.sub}</text>}
+          {row.change && (
+            <>
+              <path class="dg-rule" d={`M48 ${row.y + 46}H300`} />
+              <text class="dg-at" x="48" y={row.y + 65}>{row.change.title}</text>
+              <text class="dg-s" x="48" y={row.y + 81}>{row.change.sub}</text>
+            </>
+          )}
+        </g>
+      ))
     }
   </svg>
 </DiagramFigure>

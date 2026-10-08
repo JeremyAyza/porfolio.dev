@@ -13,9 +13,9 @@ const LABELS = {
     sale: "La misma venta",
     saleSub: "suite E2E en Playwright",
     legacy: "POS legacy",
-    legacySub: "flujo de venta anterior",
+    legacySub: "flujo anterior",
     next: "POS nuevo",
-    nextSub: "nueva capa de dominio",
+    nextSub: "capa de dominio",
     payloadA: "Payload A",
     payloadB: "Payload B",
     captured: "capturado",
@@ -30,9 +30,9 @@ const LABELS = {
     sale: "The same sale",
     saleSub: "Playwright E2E suite",
     legacy: "Old POS",
-    legacySub: "previous sale flow",
+    legacySub: "previous flow",
     next: "New POS",
-    nextSub: "new domain layer",
+    nextSub: "domain layer",
     payloadA: "Payload A",
     payloadB: "Payload B",
     captured: "captured",
@@ -48,8 +48,8 @@ const l = LABELS[Astro.props.lang]
 
 <DiagramFigure caption={l.caption}>
   <svg
-    class="dg mx-auto h-auto w-full max-w-[30rem]"
-    viewBox="0 0 440 430"
+    class="dg mx-auto h-auto w-full max-w-[23rem]"
+    viewBox="0 0 320 430"
     role="img"
     aria-labelledby="dg-parity-title dg-parity-desc"
   >
@@ -62,47 +62,47 @@ const l = LABELS[Astro.props.lang]
     </defs>
 
     <g text-anchor="middle">
-      <rect class="dg-box" x="130" y="8" width="180" height="48" rx="8"></rect>
-      <text class="dg-t" x="220" y="29">{l.sale}</text>
-      <text class="dg-s" x="220" y="46">{l.saleSub}</text>
+      <rect class="dg-box" x="66" y="8" width="188" height="48" rx="8"></rect>
+      <text class="dg-t" x="160" y="29">{l.sale}</text>
+      <text class="dg-s" x="160" y="46">{l.saleSub}</text>
 
-      <path class="dg-wire" d="M220 56V78H110V100" marker-end="url(#dg-parity-arrow)"></path>
-      <path class="dg-wire" d="M220 78H330V100" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M160 56V78H80V100" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M160 78H240V100" marker-end="url(#dg-parity-arrow)"></path>
 
-      <rect class="dg-box" x="20" y="102" width="180" height="48" rx="8"></rect>
-      <text class="dg-t" x="110" y="123">{l.legacy}</text>
-      <text class="dg-s" x="110" y="140">{l.legacySub}</text>
+      <rect class="dg-box" x="6" y="102" width="148" height="48" rx="8"></rect>
+      <text class="dg-t" x="80" y="123">{l.legacy}</text>
+      <text class="dg-s" x="80" y="140">{l.legacySub}</text>
 
-      <rect class="dg-box" x="240" y="102" width="180" height="48" rx="8"></rect>
-      <text class="dg-t" x="330" y="123">{l.next}</text>
-      <text class="dg-s" x="330" y="140">{l.nextSub}</text>
+      <rect class="dg-box" x="166" y="102" width="148" height="48" rx="8"></rect>
+      <text class="dg-t" x="240" y="123">{l.next}</text>
+      <text class="dg-s" x="240" y="140">{l.nextSub}</text>
 
-      <path class="dg-wire" d="M110 150V178" marker-end="url(#dg-parity-arrow)"></path>
-      <path class="dg-wire" d="M330 150V178" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M80 150V178" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M240 150V178" marker-end="url(#dg-parity-arrow)"></path>
 
-      <rect class="dg-box" x="20" y="180" width="180" height="48" rx="8"></rect>
-      <text class="dg-t" x="110" y="201">{l.payloadA}</text>
-      <text class="dg-s" x="110" y="218">{l.captured}</text>
+      <rect class="dg-box" x="6" y="180" width="148" height="48" rx="8"></rect>
+      <text class="dg-t" x="80" y="201">{l.payloadA}</text>
+      <text class="dg-s" x="80" y="218">{l.captured}</text>
 
-      <rect class="dg-box" x="240" y="180" width="180" height="48" rx="8"></rect>
-      <text class="dg-t" x="330" y="201">{l.payloadB}</text>
-      <text class="dg-s" x="330" y="218">{l.captured}</text>
+      <rect class="dg-box" x="166" y="180" width="148" height="48" rx="8"></rect>
+      <text class="dg-t" x="240" y="201">{l.payloadB}</text>
+      <text class="dg-s" x="240" y="218">{l.captured}</text>
 
-      <path class="dg-wire" d="M110 228V252H220V274" marker-end="url(#dg-parity-arrow)"></path>
-      <path class="dg-wire" d="M330 228V252H220"></path>
+      <path class="dg-wire" d="M80 228V252H160V274" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M240 228V252H160"></path>
 
-      <rect class="dg-box-accent" x="50" y="276" width="340" height="56" rx="8"></rect>
-      <text class="dg-t" x="220" y="300">{l.compare}</text>
-      <text class="dg-s" x="220" y="318">{l.compareSub}</text>
+      <rect class="dg-box-accent" x="6" y="276" width="308" height="56" rx="8"></rect>
+      <text class="dg-t" x="160" y="300">{l.compare}</text>
+      <text class="dg-s" x="160" y="318">{l.compareSub}</text>
 
-      <path class="dg-wire" d="M220 332V354H125V374" marker-end="url(#dg-parity-arrow)"></path>
-      <path class="dg-wire" d="M220 354H315V374" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M160 332V354H80V374" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M160 354H240V374" marker-end="url(#dg-parity-arrow)"></path>
 
-      <rect class="dg-box" x="40" y="376" width="170" height="44" rx="8"></rect>
-      <text class="dg-t" x="125" y="402">{l.pass}</text>
+      <rect class="dg-box" x="6" y="376" width="148" height="44" rx="8"></rect>
+      <text class="dg-t" x="80" y="402">{l.pass}</text>
 
-      <rect class="dg-box" x="230" y="376" width="170" height="44" rx="8"></rect>
-      <text class="dg-t" x="315" y="402">{l.fail}</text>
+      <rect class="dg-box" x="166" y="376" width="148" height="44" rx="8"></rect>
+      <text class="dg-t" x="240" y="402">{l.fail}</text>
     </g>
   </svg>
 </DiagramFigure>
