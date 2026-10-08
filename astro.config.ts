@@ -2,7 +2,8 @@ import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
-import { DEFAULT_LANG, LOCALES, alternatesFor } from "./src/i18n/routes"
+import serviceWorker from "./integrations/service-worker.mjs"
+import { DEFAULT_LANG, LOCALES, alternatesFor, homePath } from "./src/i18n/routes"
 
 // La dirección pública vive en un solo lugar. Se cambia con la variable SITE_URL.
 const site = process.env.SITE_URL ?? "https://jeremy-ayza.onrender.com"
@@ -32,6 +33,8 @@ export default defineConfig({
         }
       },
     }),
+    // Siempre al final: su lista incluye lo que escriben las demás integraciones.
+    serviceWorker({ home: homePath(DEFAULT_LANG) }),
   ],
   vite: {
     plugins: [tailwindcss()],

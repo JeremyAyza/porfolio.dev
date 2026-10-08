@@ -40,3 +40,42 @@ const t = useTranslations(lang)
     background-color: var(--ink);
   }
 </style>
+
+<script>
+  type State = "pending" | "ready" | "offline" | "unsupported" | "dev"
+
+  const nodes = [...document.querySelectorAll<HTMLElement>("[data-offline-status]")]
+
+  function show(state: State) {
+    for (const node of nodes) {
+      const strings: Record<string, string> = JSON.parse(node.dataset.strings ?? "{}")
+      node.dataset.state = state
+      const text = node.querySelector("[data-offline-text]")
+      if (text) text.textContent = strings[`offline.${state}`] ?? ""
+    }
+  }
+
+  async function start() {
+    if (!("serviceWorker" in navigator)) return show("unsupported")
+    // En desarrollo no existe sw.js: lo genera el build.
+    if (import.meta.env.DEV) return show("dev")
+
+    let saved = false
+    const refresh = () => show(!navigator.onLine ? "offline" : saved ? "ready" : "pending")
+    addEventListener("online", refresh)
+    addEventListener("offline", refresh)
+    refresh()
+
+    try {
+      await navigator.serviceWorker.register("/sw.js")
+      // `ready` se resuelve cuando el service worker terminó de guardar los archivos.
+      await navigator.serviceWorker.ready
+      saved = true
+      refresh()
+    } catch {
+      show("unsupported")
+    }
+  }
+
+  start()
+</script>
