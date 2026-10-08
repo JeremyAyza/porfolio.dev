@@ -1,0 +1,41 @@
+---
+caseId: parity-tests
+lang: en
+order: 1
+kind: work
+title: Parity tests for the new checkout
+summary: I redesigned the checkout of a POS that issues tax receipts 24/7. I verified it by comparing, field by field, what the old system sends with what the new one sends.
+card:
+  problem: The POS issues tax receipts for clients who sell 24/7. The new checkout could not fail.
+  decision: The same sale runs on the old POS and on the new one. The two payloads are compared field by field.
+  result: 12 Playwright suites. The new checkout is in production.
+period: Jun 2026 – Present
+status: In production
+stack: [React, TypeScript, Playwright, Claude Code]
+---
+
+import ParityDiagram from "@/components/diagrams/ParityDiagram.astro"
+
+## Problem
+
+CasaMarket's web POS issues tax receipts (Boleta, Factura and Nota de Venta) to SUNAT, Peru's tax agency, for clients who sell 24/7. So the new checkout could not fail.
+
+The work had two parts: move the sale logic to a layer that can be tested, and show that the new checkout produces the same result as the old one.
+
+## Decision
+
+I designed a pure domain layer that can be tested (cart, payments, customer, credit, taxes and discounts), with the sale as a use case.
+
+To check the new checkout, I came up with a parity strategy. A Playwright end-to-end suite runs the same sale on the old POS and on the new one. It captures both payloads and compares them field by field. It ignores known noise, such as dates and IDs.
+
+<ParityDiagram lang="en" />
+
+I used Claude Code to audit the code in parallel and to generate test cases. I defined the scope, the business rules and which findings were valid.
+
+## Result
+
+There are 12 suites. They cover decimal precision, tax types, discounts, combos, payments and more. The new checkout is in production.
+
+## Limit
+
+Parity does not prove that the math is right. If both systems share a bug, the test still passes. I documented this limit of the method.

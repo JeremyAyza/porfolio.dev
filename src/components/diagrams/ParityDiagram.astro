@@ -1,0 +1,108 @@
+---
+import DiagramFigure from "./DiagramFigure.astro"
+import type { Lang } from "@/i18n/routes"
+
+interface Props {
+  lang: Lang
+}
+
+const LABELS = {
+  es: {
+    caption: "La misma venta pasa por los dos sistemas y se comparan los payloads.",
+    desc: "Una suite de Playwright ejecuta la misma venta en el POS legacy y en el POS nuevo. Captura el payload de cada uno y los compara campo por campo, ignorando fechas e IDs. Si son iguales la prueba pasa; si son distintos, falla.",
+    sale: "La misma venta",
+    saleSub: "suite E2E en Playwright",
+    legacy: "POS legacy",
+    legacySub: "flujo de venta anterior",
+    next: "POS nuevo",
+    nextSub: "nueva capa de dominio",
+    payloadA: "Payload A",
+    payloadB: "Payload B",
+    captured: "capturado",
+    compare: "Comparación campo por campo",
+    compareSub: "se ignoran fechas e IDs",
+    pass: "Iguales: pasa",
+    fail: "Distintos: falla",
+  },
+  en: {
+    caption: "The same sale goes through both systems, and the payloads are compared.",
+    desc: "A Playwright suite runs the same sale on the old POS and on the new POS. It captures the payload of each one and compares them field by field, ignoring dates and IDs. If they are the same the test passes; if they are different, it fails.",
+    sale: "The same sale",
+    saleSub: "Playwright E2E suite",
+    legacy: "Old POS",
+    legacySub: "previous sale flow",
+    next: "New POS",
+    nextSub: "new domain layer",
+    payloadA: "Payload A",
+    payloadB: "Payload B",
+    captured: "captured",
+    compare: "Field-by-field comparison",
+    compareSub: "dates and IDs are ignored",
+    pass: "Same: pass",
+    fail: "Different: fail",
+  },
+} as const
+
+const l = LABELS[Astro.props.lang]
+---
+
+<DiagramFigure caption={l.caption}>
+  <svg
+    class="dg mx-auto h-auto w-full max-w-[30rem]"
+    viewBox="0 0 440 430"
+    role="img"
+    aria-labelledby="dg-parity-title dg-parity-desc"
+  >
+    <title id="dg-parity-title">{l.caption}</title>
+    <desc id="dg-parity-desc">{l.desc}</desc>
+    <defs>
+      <marker id="dg-parity-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 10 5 0 10z" class="dg-head"></path>
+      </marker>
+    </defs>
+
+    <g text-anchor="middle">
+      <rect class="dg-box" x="130" y="8" width="180" height="48" rx="8"></rect>
+      <text class="dg-t" x="220" y="29">{l.sale}</text>
+      <text class="dg-s" x="220" y="46">{l.saleSub}</text>
+
+      <path class="dg-wire" d="M220 56V78H110V100" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M220 78H330V100" marker-end="url(#dg-parity-arrow)"></path>
+
+      <rect class="dg-box" x="20" y="102" width="180" height="48" rx="8"></rect>
+      <text class="dg-t" x="110" y="123">{l.legacy}</text>
+      <text class="dg-s" x="110" y="140">{l.legacySub}</text>
+
+      <rect class="dg-box" x="240" y="102" width="180" height="48" rx="8"></rect>
+      <text class="dg-t" x="330" y="123">{l.next}</text>
+      <text class="dg-s" x="330" y="140">{l.nextSub}</text>
+
+      <path class="dg-wire" d="M110 150V178" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M330 150V178" marker-end="url(#dg-parity-arrow)"></path>
+
+      <rect class="dg-box" x="20" y="180" width="180" height="48" rx="8"></rect>
+      <text class="dg-t" x="110" y="201">{l.payloadA}</text>
+      <text class="dg-s" x="110" y="218">{l.captured}</text>
+
+      <rect class="dg-box" x="240" y="180" width="180" height="48" rx="8"></rect>
+      <text class="dg-t" x="330" y="201">{l.payloadB}</text>
+      <text class="dg-s" x="330" y="218">{l.captured}</text>
+
+      <path class="dg-wire" d="M110 228V252H220V274" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M330 228V252H220"></path>
+
+      <rect class="dg-box-accent" x="50" y="276" width="340" height="56" rx="8"></rect>
+      <text class="dg-t" x="220" y="300">{l.compare}</text>
+      <text class="dg-s" x="220" y="318">{l.compareSub}</text>
+
+      <path class="dg-wire" d="M220 332V354H125V374" marker-end="url(#dg-parity-arrow)"></path>
+      <path class="dg-wire" d="M220 354H315V374" marker-end="url(#dg-parity-arrow)"></path>
+
+      <rect class="dg-box" x="40" y="376" width="170" height="44" rx="8"></rect>
+      <text class="dg-t" x="125" y="402">{l.pass}</text>
+
+      <rect class="dg-box" x="230" y="376" width="170" height="44" rx="8"></rect>
+      <text class="dg-t" x="315" y="402">{l.fail}</text>
+    </g>
+  </svg>
+</DiagramFigure>

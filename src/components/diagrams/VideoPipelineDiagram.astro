@@ -1,0 +1,102 @@
+---
+import DiagramFigure from "./DiagramFigure.astro"
+import type { Lang } from "@/i18n/routes"
+
+interface Props {
+  lang: Lang
+}
+
+interface Step {
+  name: string
+  sub?: string
+  change?: { title: string; sub: string }
+}
+
+const LABELS: Record<Lang, { caption: string; desc: string; original: string; changed: string; steps: Step[] }> = {
+  es: {
+    caption: "Los 7 pasos del pipeline y los tres donde cambié algo.",
+    desc: "El pipeline original tiene 7 pasos: guion, imágenes, voz, video, subtítulos, música y entrega. Cambié tres: en imágenes, un collage por escena y generación en Flow con Playwright y una extensión; en subtítulos, Whisper pasó de CPU a GPU; en entrega, subida automática y programada a YouTube.",
+    original: "Pipeline original (7 pasos)",
+    changed: "Lo que cambié",
+    steps: [
+      { name: "Guion", sub: "modelo de IA" },
+      {
+        name: "Imágenes",
+        sub: "modelo de IA",
+        change: { title: "1 collage por escena", sub: "Flow, Playwright, extensión" },
+      },
+      { name: "Voz", sub: "modelo de IA" },
+      { name: "Video" },
+      { name: "Subtítulos", sub: "Whisper", change: { title: "De CPU a GPU", sub: "whisper.cpp con CUDA" } },
+      { name: "Música" },
+      { name: "Entrega", change: { title: "Subida automática", sub: "programada en YouTube" } },
+    ],
+  },
+  en: {
+    caption: "The 7 pipeline steps, and the three where I changed something.",
+    desc: "The original pipeline has 7 steps: script, images, voice, video, subtitles, music and delivery. I changed three: for images, one collage per scene and generation in Flow with Playwright and an extension; for subtitles, Whisper moved from CPU to GPU; for delivery, automatic scheduled upload to YouTube.",
+    original: "Original pipeline (7 steps)",
+    changed: "What I changed",
+    steps: [
+      { name: "Script", sub: "AI model" },
+      {
+        name: "Images",
+        sub: "AI model",
+        change: { title: "1 collage per scene", sub: "Flow, Playwright, extension" },
+      },
+      { name: "Voice", sub: "AI model" },
+      { name: "Video" },
+      { name: "Subtitles", sub: "Whisper", change: { title: "CPU to GPU", sub: "whisper.cpp with CUDA" } },
+      { name: "Music" },
+      { name: "Delivery", change: { title: "Automatic upload", sub: "scheduled on YouTube" } },
+    ],
+  },
+}
+
+const l = LABELS[Astro.props.lang]
+const PITCH = 72
+const TOP = 32
+---
+
+<DiagramFigure caption={l.caption}>
+  <svg
+    class="dg mx-auto h-auto w-full max-w-[30rem]"
+    viewBox="0 0 440 524"
+    role="img"
+    aria-labelledby="dg-video-title dg-video-desc"
+  >
+    <title id="dg-video-title">{l.caption}</title>
+    <desc id="dg-video-desc">{l.desc}</desc>
+    <defs>
+      <marker id="dg-video-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 10 5 0 10z" class="dg-head"></path>
+      </marker>
+    </defs>
+
+    <text class="dg-s" x="6" y="18">{l.original}</text>
+    <text class="dg-a" x="222" y="18">{l.changed}</text>
+
+    {
+      l.steps.map((step, index) => {
+        const y = TOP + index * PITCH
+        return (
+          <g>
+            {index > 0 && <path class="dg-wire" d={`M105 ${y - 20}V${y - 2}`} marker-end="url(#dg-video-arrow)" />}
+            <rect class="dg-box" x="6" y={y} width="198" height="52" rx="8" />
+            <text class="dg-s" x="20" y={y + 31}>{String(index + 1).padStart(2, "0")}</text>
+            <text class="dg-t" x="48" y={step.sub ? y + 23 : y + 31}>{step.name}</text>
+            {step.sub && <text class="dg-s" x="48" y={y + 40}>{step.sub}</text>}
+            {step.change && (
+              <>
+                <path class="dg-wire" d={`M204 ${y + 26}H222`} />
+                <rect class="dg-box-accent" x="222" y={y} width="212" height="52" rx="8" />
+                <text class="dg-t" x="234" y={y + 23}>{step.change.title}</text>
+                <text class="dg-s" x="234" y={y + 40}>{step.change.sub}</text>
+              </>
+            )}
+          </g>
+        )
+      })
+    }
+  </svg>
+</DiagramFigure>

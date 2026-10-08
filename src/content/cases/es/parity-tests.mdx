@@ -1,0 +1,41 @@
+---
+caseId: parity-tests
+lang: es
+order: 1
+kind: work
+title: Pruebas de paridad para el nuevo flujo de venta
+summary: Rediseñé el flujo de venta de un POS que emite comprobantes 24/7 y lo verifiqué comparando, campo por campo, lo que envía el sistema anterior con lo que envía el nuevo.
+card:
+  problem: El POS emite comprobantes ante SUNAT para clientes que venden 24/7. Rehacer su flujo de venta no podía fallar.
+  decision: La misma venta corre en el POS legacy y en el nuevo, y se comparan los dos payloads campo por campo.
+  result: 12 suites de Playwright. El nuevo flujo está en producción.
+period: jun 2026 – actualidad
+status: En producción
+stack: [React, TypeScript, Playwright, Claude Code]
+---
+
+import ParityDiagram from "@/components/diagrams/ParityDiagram.astro"
+
+## Problema
+
+El POS web de CasaMarket emite Boleta, Factura y Nota de Venta ante SUNAT para clientes que venden 24/7, así que rehacer su flujo de venta no podía fallar.
+
+El trabajo tenía dos partes: llevar la lógica de venta a una capa que se pudiera probar, y demostrar que el flujo nuevo produce lo mismo que el anterior.
+
+## Decisión
+
+Diseñé una capa de dominio pura y testeable (carrito, pagos, cliente, crédito, impuestos y descuentos) con la venta como caso de uso.
+
+Para comprobar el flujo nuevo ideé una estrategia de paridad. Una suite E2E en Playwright ejecuta la misma venta en el POS legacy y en el nuevo, captura los dos payloads y los compara campo por campo. Ignora el ruido conocido, como fechas e IDs.
+
+<ParityDiagram lang="es" />
+
+Usé Claude Code para auditar el código en paralelo y generar casos de prueba. El alcance, las reglas de negocio y la validación de los hallazgos los definí yo.
+
+## Resultado
+
+Son 12 suites: precisión decimal, tipos de impuesto, descuentos, combos y pagos, entre otras. El nuevo flujo de venta está en producción.
+
+## Límite
+
+La paridad no prueba que el cálculo sea correcto. Si los dos sistemas comparten un bug, el test pasa igual. Dejé documentado este límite del método.

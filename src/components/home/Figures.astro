@@ -1,0 +1,28 @@
+---
+import { FIGURES } from "@/data/site"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<section aria-label={t("figures.label")} class="mx-auto max-w-[1080px] px-5 sm:px-8" data-chunk={t("figures.label")}>
+  <dl class="grid gap-x-10 gap-y-8 border-y border-line py-8 sm:grid-cols-3" data-figures>
+    {
+      FIGURES[lang].map((figure) => (
+        <div class="flex flex-col">
+          <dt class="order-2 mt-2 max-w-[30ch] text-[0.9375rem] leading-snug">{figure.label}</dt>
+          <dd class="order-1 font-display text-5xl font-bold leading-none tracking-tight text-accent sm:text-6xl">
+            {figure.value}
+          </dd>
+          <dd class="label order-3 mt-2">{figure.note}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

@@ -1,0 +1,45 @@
+---
+caseId: voice-search
+lang: es
+order: 2
+kind: work
+title: Búsqueda por voz con embeddings en el navegador
+summary: Búsqueda de productos por voz para el flujo de venta de un POS. La búsqueda vectorial corre en el navegador, sobre el catálogo que el POS ya guarda ahí.
+card:
+  problem: Buscar un producto por voz en plena venta tiene que ser rápido, sin sumar un servicio más que pagar.
+  decision: La búsqueda vectorial corre en el navegador, sobre el catálogo que el POS ya guarda ahí.
+  result: Desplegada en producción, detrás de una activación por empresa.
+period: mar 2026 – may 2026
+status: Desplegada en producción, detrás de una activación por empresa
+stack: [Transformers.js, Orama, Web Worker, gpt-4o-mini, GA4]
+---
+
+import VoiceSearchDiagram from "@/components/diagrams/VoiceSearchDiagram.astro"
+
+## Problema
+
+El POS necesitaba búsqueda de productos por voz para el flujo de venta, usada con el hardware de tienda de la empresa. En plena venta, la búsqueda tiene que responder rápido.
+
+## Decisión
+
+El flujo tiene cuatro pasos: audio, transcripción (`gpt-4o-mini-transcribe`), búsqueda vectorial de candidatos y elección del producto con `gpt-4o-mini`.
+
+Decidí que la búsqueda vectorial corriera en el navegador, por tres razones:
+
+- **Rapidez.** No hay un viaje de red por cada búsqueda.
+- **Costo.** No hay un servicio de embeddings ni una base vectorial que pagar o mantener.
+- **El catálogo ya estaba ahí.** El POS lo guarda en el navegador para vender sin internet.
+
+<VoiceSearchDiagram lang="es" />
+
+Los embeddings (`all-MiniLM-L6`) se calculan con Transformers.js en un Web Worker. El índice es de Orama y se guarda en el navegador.
+
+## Resultado
+
+Admite varios productos por comando, mide su uso con GA4 y se carga solo para las empresas que lo tienen activado. Está desplegada en producción, detrás de una activación por empresa.
+
+El buscador de este portafolio usa la misma idea: ábrelo desde el encabezado.
+
+## Límite
+
+La transcripción y la elección del producto necesitan conexión. Solo la búsqueda vectorial es local.

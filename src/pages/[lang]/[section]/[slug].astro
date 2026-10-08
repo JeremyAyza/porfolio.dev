@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from "astro:content"
+import Icon from "@/components/Icon.astro"
+import Base from "@/layouts/Base.astro"
+import { SECTION_IDS, casePath, homePath } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+export async function getStaticPaths() {
+  const entries = await getCollection("cases")
+  return entries.map((entry) => {
+    const [, lang, section, slug] = casePath(entry.data.lang, entry.data.caseId).split("/")
+    const siblings = entries
+      .filter((other) => other.data.lang === entry.data.lang)
+      .sort((a, b) => a.data.order - b.data.order)
+    const next = siblings[(siblings.indexOf(entry) + 1) % siblings.length]
+    return { params: { lang, section, slug }, props: { entry, next } }
+  })
+}
+
+const { entry, next } = Astro.props
+const { data } = entry
+const { lang } = data
+const t = useTranslations(lang)
+const { Content } = await render(entry)
+---
+
+<Base lang={lang} title={data.title} description={data.summary} image={`/og/${data.caseId}-${lang}.png`} type="article">
+  <article class="mx-auto max-w-[1080px] px-5 pt-8 sm:px-8 sm:pt-12" data-case={data.caseId}>
+    <a
+      class="label inline-flex min-h-11 items-center gap-2 transition-colors hover:text-ink"
+      href={`${homePath(lang)}#${SECTION_IDS[lang].cases}`}
+    >
+      <Icon name="arrow-left" size={14} />
+      {t("cases.back")}
+    </a>
+
+    <header class="mt-4 border-l-4 border-accent pl-5 sm:pl-7">
+      <p class="label">{t(`cases.kind.${data.kind}`)}</p>
+      <h1 class="mt-2 max-w-3xl font-display text-[clamp(1.75rem,4.4vw,3rem)] font-bold leading-[1.1] tracking-tight">
+        {data.title}
+      </h1>
+      <p class="mt-4 max-w-[62ch] text-lg text-muted">{data.summary}</p>
+    </header>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-14">
+      <aside class="self-start lg:sticky lg:top-24">
+        <dl class="grid grid-cols-2 gap-x-6 gap-y-5 border-y border-line py-5 text-[0.9375rem] lg:grid-cols-1">
+          <div>
+            <dt class="label">{t("cases.period")}</dt>
+            <dd class="mt-1">{data.period}</dd>
+          </div>
+          <div>
+            <dt class="label">{t("cases.status")}</dt>
+            <dd class="mt-1">{data.status}</dd>
+          </div>
+          <div class="col-span-2 lg:col-span-1">
+            <dt class="label">{t("cases.stack")}</dt>
+            <dd class="mt-2 flex flex-wrap gap-1.5">
+              {data.stack.map((item) => <span class="chip">{item}</span>)}
+            </dd>
+          </div>
+          {
+            data.links.length > 0 && (
+              <div class="col-span-2 lg:col-span-1">
+                <dt class="label">{t("cases.links")}</dt>
+                {data.links.map((link) => (
+                  <dd class="mt-1">
+                    <a class="link inline-flex min-h-11 items-center gap-1" href={link.href} rel="noopener">
+                      {link.label} <Icon name="arrow-up-right" size={14} />
+                    </a>
+                  </dd>
+                ))}
+              </div>
+            )
+          }
+        </dl>
+      </aside>
+
+      <div class="prose-case min-w-0" data-case-body>
+        <Content />
+      </div>
+    </div>
+
+    <nav class="mt-16 border-t border-line pt-6" aria-label={t("cases.next")}>
+      <a class="group inline-flex flex-col" href={casePath(lang, next.data.caseId)}>
+        <span class="label">{t("cases.next")}</span>
+        <span class="mt-1 flex items-center gap-2 font-display text-xl font-bold tracking-tight group-hover:text-accent">
+          {next.data.title}
+          <Icon name="arrow-right" size={18} class="flex-none transition-transform group-hover:translate-x-1" />
+        </span>
+      </a>
+    </nav>
+  </article>
+</Base>

@@ -1,0 +1,25 @@
+---
+import Base from "@/layouts/Base.astro"
+import { DEFAULT_LANG, LOCALES, homePath } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+---
+
+<Base lang={DEFAULT_LANG} title="404" noindex>
+  <div class="mx-auto max-w-[1080px] px-5 py-24 sm:px-8">
+    <p class="label">404</p>
+    {
+      LOCALES.map((lang) => {
+        const t = useTranslations(lang)
+        return (
+          <div class="mt-6 border-l-4 border-accent pl-5" lang={lang}>
+            <h1 class="font-display text-3xl font-bold tracking-tight">{t("notFound.title")}</h1>
+            <p class="mt-2 text-muted">{t("notFound.body")}</p>
+            <a class="link mt-3 inline-flex min-h-11 items-center" href={homePath(lang)}>
+              {t("notFound.home")}
+            </a>
+          </div>
+        )
+      })
+    }
+  </div>
+</Base>

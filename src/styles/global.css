@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../assets/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tema oscuro: el del banner. Es el valor por defecto. */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --surface: #111b2e;
+  --surface-2: #16223a;
+  --line: #24324d;
+  --ink: #e8eef8;
+  --muted: #9fb0cc;
+  --accent: #3ddc97;
+  --accent-ink: #06281a;
+  --dot: #1a2640;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --surface-2: #eaeff6;
+  --line: #d5dde9;
+  --ink: #0b1220;
+  --muted: #47566f;
+  --accent: #0a7d52;
+  --accent-ink: #ffffff;
+  --dot: #dde4ef;
+}
+
+/* Sin JavaScript no hay data-theme: se respeta la preferencia del sistema. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f6f8fb;
+    --surface: #ffffff;
+    --surface-2: #eaeff6;
+    --line: #d5dde9;
+    --ink: #0b1220;
+    --muted: #47566f;
+    --accent: #0a7d52;
+    --accent-ink: #ffffff;
+    --dot: #dde4ef;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Trama de puntos del banner, solo detrás del titular. */
+  .dot-grid {
+    background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+
+  .chip {
+    display: inline-block;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .link {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .link:hover {
+    color: var(--accent);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--surface);
+    padding: 0.5rem 0.9rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+
+  .btn:hover {
+    border-color: var(--accent);
+  }
+
+  /* El botón de tema muestra el icono del tema al que cambia. */
+  .theme-toggle .icon-moon,
+  [data-theme="light"] .theme-toggle .icon-sun {
+    display: none;
+  }
+
+  [data-theme="light"] .theme-toggle .icon-moon {
+    display: block;
+  }
+
+  /* Texto de los casos (MDX). */
+  .prose-case > * + * {
+    margin-top: 1rem;
+  }
+
+  .prose-case h2 {
+    margin-top: 2.75rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    scroll-margin-top: 5rem;
+  }
+
+  .prose-case h2::before {
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 3px;
+    margin-bottom: 0.75rem;
+    background-color: var(--accent);
+  }
+
+  .prose-case > h2:first-child {
+    margin-top: 0;
+  }
+
+  .prose-case p,
+  .prose-case li {
+    max-width: 68ch;
+  }
+
+  .prose-case ul,
+  .prose-case ol {
+    padding-left: 1.25rem;
+  }
+
+  .prose-case ul {
+    list-style: disc;
+  }
+
+  .prose-case ol {
+    list-style: decimal;
+  }
+
+  .prose-case li + li {
+    margin-top: 0.4rem;
+  }
+
+  .prose-case li::marker {
+    color: var(--accent);
+  }
+
+  .prose-case a {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .prose-case code {
+    border: 1px solid var(--line);
+    border-radius: 0.25rem;
+    background-color: var(--surface);
+    padding: 0.05rem 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+
+  /* Diagramas SVG: los colores siguen el tema. */
+  .dg text {
+    font-family: var(--font-mono);
+  }
+
+  .dg-box {
+    fill: var(--surface);
+    stroke: var(--line);
+    stroke-width: 1.5;
+  }
+
+  .dg-box-accent {
+    fill: var(--surface);
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+
+  .dg-zone {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 5;
+  }
+
+  .dg-wire {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 1.5;
+  }
+
+  .dg-head {
+    fill: var(--muted);
+  }
+
+  .dg-t {
+    fill: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .dg-s {
+    fill: var(--muted);
+    font-size: 11px;
+  }
+
+  .dg-a {
+    fill: var(--accent);
+    font-size: 11px;
+    font-weight: 500;
+  }
+}

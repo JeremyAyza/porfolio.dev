@@ -1,39 +1,27 @@
 ---
-import { LINKS } from "@/resources/constants"
+import OfflineStatus from "./OfflineStatus.astro"
+import { SITE } from "@/data/site"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
 
-const currentYear = new Date().getFullYear()
-const { email, linkedIn, github } = LINKS
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
 ---
 
-<footer
-  class="opacity-80 m-4 min-[375px]:pl-4 md:pl-0 mt-16 w-full mx-auto container lg:max-w-4xl md:max-w-2xl mb-10 flex justify-center"
->
+<footer class="mt-24 border-t border-line">
   <div
-    class="rounded-lg w-full max-w-screen-xl mx-auto md:flex md:items-center md:justify-between py-4"
+    class="mx-auto flex max-w-[1080px] flex-col gap-3 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8"
   >
-    <span class="text-sm sm:text-center text-zinc-800/90 dark:text-zinc-200/90"
-      >© {currentYear}
-      Jeremy Ayza.
-    </span>
-    <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium dark:text-white/90 sm:mt-0 [&>a]:hover:underline"
-    >
-      <li>
-        <a href="/#inicio" class="hover:underline me-4 md:me-6">Inicio</a>
-      </li>
-      <li>
-        <a href={linkedIn} target="_blank" class="hover:underline me-4 md:me-6"
-          >Linkedin</a
-        >
-      </li>
-      <li>
-        <a href={github} target="_blank" class="hover:underline me-4 md:me-6"
-          >GitHub</a
-        >
-      </li>
-      <li>
-        <a href={email} target="_blank" class="hover:underline">Contacto</a>
-      </li>
-    </ul>
+    <div class="space-y-1">
+      <p class="font-mono text-xs text-muted">
+        © 2026 {SITE.name}. {t("footer.built")}
+        <a class="link" href={SITE.links.repo} rel="noopener">{t("footer.source")}</a>
+      </p>
+    </div>
+    <OfflineStatus lang={lang} />
   </div>
 </footer>

@@ -1,0 +1,35 @@
+---
+import { LOCALES, alternatesFor, homePath, type Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const alternates = alternatesFor(Astro.url.pathname)
+---
+
+<nav aria-label={t("lang.label")} class="flex items-center font-mono text-sm">
+  {
+    LOCALES.map((code, index) => (
+      <>
+        {index > 0 && <span class="text-line" aria-hidden="true">/</span>}
+        <a
+          href={alternates?.[code] ?? homePath(code)}
+          hreflang={code}
+          lang={code}
+          aria-label={t(`lang.${code}`)}
+          aria-current={code === lang ? "true" : undefined}
+          class:list={[
+            "inline-flex min-h-11 items-center px-1.5 uppercase transition-colors hover:text-ink",
+            code === lang ? "font-medium text-accent" : "text-muted",
+          ]}
+        >
+          {code}
+        </a>
+      </>
+    ))
+  }
+</nav>

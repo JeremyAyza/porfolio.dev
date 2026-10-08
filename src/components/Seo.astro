@@ -1,0 +1,94 @@
+---
+import { getImage } from "astro:assets"
+import photo from "@/assets/jeremy-ayza.jpg"
+import { SITE } from "@/data/site"
+import { DEFAULT_LANG, LOCALES, alternatesFor, homePath, type Lang } from "@/i18n/routes"
+
+interface Props {
+  lang: Lang
+  title: string
+  description: string
+  /** Ruta de la imagen de vista previa (PNG de 1200x630). */
+  image: string
+  type?: "website" | "article"
+  /** Solo el inicio lleva los datos estructurados de persona. */
+  person?: boolean
+  noindex?: boolean
+}
+
+const { lang, title, description, image, type = "website", person = false, noindex = false } = Astro.props
+
+const site = Astro.site ?? new URL("http://localhost:4321")
+const absolute = (path: string) => new URL(path, site).href
+const canonical = absolute(Astro.url.pathname)
+const alternates = alternatesFor(Astro.url.pathname)
+const ogLocale: Record<Lang, string> = { es: "es_PE", en: "en_US" }
+
+const personData = person
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: SITE.name,
+      url: absolute(homePath(lang)),
+      image: absolute((await getImage({ src: photo, width: 400, height: 400, format: "jpg" })).src),
+      jobTitle: SITE.role,
+      worksFor: { "@type": "Organization", name: "CasaMarket" },
+      address: { "@type": "PostalAddress", addressLocality: "Lima", addressCountry: "PE" },
+      email: `mailto:${SITE.email}`,
+      sameAs: [SITE.links.github, SITE.links.linkedin, SITE.links.youtube],
+      knowsAbout: [
+        "React",
+        "TypeScript",
+        "Vue",
+        "Next.js",
+        "Node.js",
+        "NestJS",
+        "PostgreSQL",
+        "Playwright",
+        "PWA",
+        "RAG",
+        "Embeddings",
+        "pgvector",
+        "Tool calling",
+        "Vercel AI SDK",
+        "MCP",
+      ],
+    }
+  : null
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={SITE.name} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+
+{
+  alternates && (
+    <>
+      {LOCALES.map((code) => (
+        <link rel="alternate" hreflang={code} href={absolute(alternates[code])} />
+      ))}
+      <link rel="alternate" hreflang="x-default" href={absolute(alternates[DEFAULT_LANG])} />
+    </>
+  )
+}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={absolute(image)} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={ogLocale[lang]} />
+{LOCALES.filter((code) => code !== lang).map((code) => <meta property="og:locale:alternate" content={ogLocale[code]} />)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absolute(image)} />
+
+{personData && <script type="application/ld+json" is:inline set:html={JSON.stringify(personData)} />}
