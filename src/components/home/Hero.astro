@@ -1,9 +1,10 @@
 ---
 import { Image } from "astro:assets"
 import photo from "@/assets/jeremy-ayza.jpg"
+import HeroDemo from "./HeroDemo.astro"
 import Icon from "@/components/Icon.astro"
-import { HEADLINE, LOCATION, SITE } from "@/data/site"
-import type { Lang } from "@/i18n/routes"
+import { HEADLINE, LOCATION, SITE, SUBHEAD } from "@/data/site"
+import { SECTION_IDS, type Lang } from "@/i18n/routes"
 import { useTranslations } from "@/i18n/ui"
 
 interface Props {
@@ -14,45 +15,55 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
-<section class="relative" data-chunk={SITE.name} id="top">
+<section class="relative" id="top" data-section>
   <div class="dot-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
-  <div class="mx-auto max-w-[1080px] px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-20">
-    <div class="flex items-center gap-4">
-      <Image
-        src={photo}
-        alt={t("hero.photoAlt")}
-        width={64}
-        height={64}
-        densities={[1, 2, 3]}
-        loading="eager"
-        class="size-16 rounded-full border border-line object-cover"
-      />
-      <div>
-        <p class="font-display text-lg font-bold leading-tight">{SITE.name}</p>
-        <p class="label" data-chunk-text>{SITE.role} · {LOCATION[lang]}</p>
+  <div
+    class="mx-auto grid max-w-[1200px] items-center gap-10 px-5 pb-12 pt-10 sm:px-8 sm:pt-14 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:gap-14 lg:pb-16 lg:pt-20"
+  >
+    <div data-chunk={SITE.name}>
+      <div class="rise flex items-center gap-4" style="--i:0">
+        <Image
+          src={photo}
+          alt={t("hero.photoAlt")}
+          width={56}
+          height={56}
+          densities={[1, 2, 3]}
+          loading="eager"
+          class="size-14 rounded-full border border-line object-cover"
+        />
+        <div>
+          <p class="font-display text-lg font-bold leading-tight">{SITE.name}</p>
+          <p class="label" data-chunk-text>{SITE.role} · {LOCATION[lang]}</p>
+        </div>
+      </div>
+
+      <div class="rise mt-7 border-l-4 border-accent pl-5 sm:pl-6" style="--i:1">
+        <h1
+          class="font-display text-[clamp(2rem,3.4vw,2.5rem)] font-bold leading-[1.06] tracking-tight"
+          data-chunk-text
+        >
+          {HEADLINE[lang].map((part) => (part.accent ? <span class="text-accent">{part.text}</span> : part.text))}
+        </h1>
+        <p class="mt-4 max-w-[46ch] text-lg leading-snug text-muted" data-chunk-text>{SUBHEAD[lang]}</p>
+      </div>
+
+      <div class="rise mt-8 flex flex-wrap items-center gap-x-6 gap-y-2" style="--i:2">
+        <a class="btn btn-primary" href={`#${SECTION_IDS[lang].cases}`}>
+          {t("hero.cta")}
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <a class="link inline-flex min-h-11 items-center gap-1" href={SITE.links.github} rel="noopener">
+          GitHub <Icon name="arrow-up-right" size={14} />
+        </a>
+        <a class="link inline-flex min-h-11 items-center gap-1" href={SITE.links.linkedin} rel="noopener">
+          LinkedIn <Icon name="arrow-up-right" size={14} />
+        </a>
+        <a class="link inline-flex min-h-11 items-center gap-1" href={SITE.links.cv} rel="noopener">
+          {t("hero.cv")} <Icon name="download" size={14} />
+        </a>
       </div>
     </div>
 
-    <h1
-      class="mt-8 max-w-4xl border-l-4 border-accent pl-5 font-display text-[clamp(1.75rem,4.6vw,3.25rem)] font-bold leading-[1.1] tracking-tight sm:pl-7"
-      data-chunk-text
-    >
-      {HEADLINE[lang].map((part) => (part.accent ? <span class="text-accent">{part.text}</span> : part.text))}
-    </h1>
-
-    <ul class="mt-8 flex flex-wrap gap-3">
-      <li>
-        <a class="btn" href={SITE.links.github} rel="noopener">GitHub <Icon name="arrow-up-right" size={16} /></a>
-      </li>
-      <li>
-        <a class="btn" href={SITE.links.linkedin} rel="noopener">LinkedIn <Icon name="arrow-up-right" size={16} /></a>
-      </li>
-      <li>
-        <a class="btn" href={`mailto:${SITE.email}`}><Icon name="mail" size={16} /> {SITE.email}</a>
-      </li>
-      <li>
-        <a class="btn" href={SITE.links.cv} rel="noopener"><Icon name="download" size={16} /> {t("hero.cv")}</a>
-      </li>
-    </ul>
+    <HeroDemo lang={lang} />
   </div>
 </section>

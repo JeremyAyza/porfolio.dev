@@ -13,6 +13,17 @@ for (const [device, viewport] of Object.entries(sizes)) {
     for (const path of paths) {
       await page.goto(base + path, { waitUntil: "networkidle" })
       await page.evaluate(() => document.querySelector("astro-dev-toolbar")?.remove())
+      // Recorre la página para que carguen las imágenes diferidas antes de capturar.
+      await page.evaluate(async () => {
+        const pause = (ms) => new Promise((done) => setTimeout(done, ms))
+        for (let y = 0; y < document.body.scrollHeight; y += innerHeight) {
+          scrollTo({ top: y, behavior: "instant" })
+          await pause(100)
+        }
+        scrollTo({ top: 0, behavior: "instant" })
+        const loaded = Promise.all([...document.images].map((image) => image.decode().catch(() => {})))
+        await Promise.race([loaded, pause(3000)])
+      })
       const name = path.replace(/\W+/g, "_").replace(/^_|_$/g, "") || "root"
       await page.screenshot({ path: `${out}/${name}-${device}-${theme}.png`, fullPage: true })
     }

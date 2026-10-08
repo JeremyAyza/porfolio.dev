@@ -1,13 +1,9 @@
 ---
 interface Props {
-  index: string
   title: string
 }
 
-const { index, title } = Astro.props
+const { title } = Astro.props
 ---
 
-<h2 class="flex items-baseline gap-3 font-display text-2xl font-bold tracking-tight sm:text-3xl">
-  <span class="font-mono text-sm font-normal text-accent" aria-hidden="true">{index}</span>
-  {title}
-</h2>
+<h2 class="font-display text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>

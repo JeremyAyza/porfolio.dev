@@ -72,6 +72,40 @@ for (const item of ALL_PAGES) {
   })
 }
 
+for (const lang of LANGS) {
+  test(`el titular del inicio ocupa dos líneas como máximo en escritorio (${lang})`, async ({ page, isMobile }) => {
+    test.skip(isMobile, "La regla es para escritorio")
+    await page.goto(HOME[lang])
+    const lines = await page.getByRole("heading", { level: 1 }).evaluate((h1) => {
+      const style = getComputedStyle(h1)
+      return Math.round(h1.getBoundingClientRect().height / parseFloat(style.lineHeight))
+    })
+    expect(lines).toBeLessThanOrEqual(2)
+  })
+
+  test(`el botón principal y el buscador del inicio se ven sin hacer scroll (${lang})`, async ({ page, isMobile }) => {
+    test.skip(isMobile, "La regla es para escritorio")
+    await page.goto(HOME[lang])
+    await expect(page.locator("main .btn-primary")).toBeInViewport({ ratio: 1 })
+    await expect(page.locator("main [data-search-open]").first()).toBeInViewport({ ratio: 1 })
+  })
+}
+
+test("el menú marca la sección que se está leyendo", async ({ page, isMobile }) => {
+  test.skip(isMobile, "En móvil el menú de secciones no se muestra")
+  await page.goto(HOME.es)
+  await page.locator("#experiencia").scrollIntoViewIfNeeded()
+  await page.evaluate(() => document.querySelector("#experiencia")?.scrollIntoView({ block: "start" }))
+  await expect(page.locator('header [data-nav="experiencia"]')).toHaveAttribute("aria-current", "true")
+  await expect(page.locator('header [data-nav="casos"]')).not.toHaveAttribute("aria-current", "true")
+
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }))
+  await expect(page.locator("header [aria-current]:not([hreflang])")).toHaveCount(0)
+
+  await page.goto(CASES[0].es)
+  await expect(page.locator('header [data-nav="casos"]')).toHaveAttribute("aria-current", "true")
+})
+
 test("el tema cambia y se recuerda al recargar", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" })
   await page.goto(HOME.es)

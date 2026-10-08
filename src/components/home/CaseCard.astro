@@ -1,15 +1,28 @@
 ---
 import type { CollectionEntry } from "astro:content"
 import Icon from "@/components/Icon.astro"
-import { casePath } from "@/i18n/routes"
+import ParityDiagram from "@/components/diagrams/ParityDiagram.astro"
+import VideoPipelineDiagram from "@/components/diagrams/VideoPipelineDiagram.astro"
+import VoiceSearchDiagram from "@/components/diagrams/VoiceSearchDiagram.astro"
+import { casePath, type CaseId } from "@/i18n/routes"
 import { useTranslations } from "@/i18n/ui"
 
 interface Props {
   entry: CollectionEntry<"cases">
+  /** El caso destacado ocupa todo el ancho y muestra su diagrama. */
+  featured?: boolean
 }
 
+const DIAGRAMS = {
+  "parity-tests": ParityDiagram,
+  "voice-search": VoiceSearchDiagram,
+  "video-pipeline": VideoPipelineDiagram,
+} satisfies Record<CaseId, unknown>
+
+const { featured = false } = Astro.props
 const { data } = Astro.props.entry
 const t = useTranslations(data.lang)
+const Diagram = DIAGRAMS[data.caseId]
 
 const lines = [
   { label: t("cases.problem"), text: data.card.problem },
@@ -19,25 +32,42 @@ const lines = [
 ---
 
 <article
-  class="group relative flex flex-col rounded-xl border border-line bg-surface p-5 transition-colors hover:border-accent sm:p-6"
+  class:list={[
+    "group relative flex flex-col rounded-xl border border-line bg-surface p-5 transition-[border-color,transform] hover:border-accent active:translate-y-px sm:p-7",
+    featured && "lg:col-span-2 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,21rem)] lg:items-center lg:gap-12",
+  ]}
   data-case-card={data.caseId}
 >
-  <p class="label">{t(`cases.kind.${data.kind}`)}</p>
-  <h3 class="mt-2 font-display text-xl font-bold leading-snug tracking-tight">
-    <a href={casePath(data.lang, data.caseId)} class="after:absolute after:inset-0 after:rounded-xl">{data.title}</a>
-  </h3>
-  <dl class="mt-5 space-y-4 text-[0.9375rem] leading-snug">
-    {
-      lines.map((line) => (
-        <div>
-          <dt class="font-mono text-xs text-accent">{line.label}</dt>
-          <dd class="mt-1">{line.text}</dd>
-        </div>
-      ))
-    }
-  </dl>
-  <p class="mt-auto flex items-center gap-2 pt-6 text-sm font-medium text-accent">
-    {t("cases.read")}
-    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
-  </p>
+  <div class="flex flex-1 flex-col">
+    <p class="text-sm text-muted">{t(`cases.kind.${data.kind}`)}</p>
+    <h3
+      class:list={[
+        "mt-1 font-display font-bold leading-snug tracking-tight",
+        featured ? "text-2xl sm:text-[1.75rem]" : "text-xl",
+      ]}
+    >
+      <a href={casePath(data.lang, data.caseId)} class="after:absolute after:inset-0 after:rounded-xl">{data.title}</a>
+    </h3>
+    <dl class="mt-5 max-w-[60ch] space-y-4 text-[0.9375rem] leading-snug">
+      {
+        lines.map((line) => (
+          <div>
+            <dt class="font-mono text-xs text-accent">{line.label}</dt>
+            <dd class="mt-1">{line.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-accent">
+      {t("cases.read")}
+      <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+    </p>
+  </div>
+  {
+    featured && (
+      <div class="mt-8 hidden sm:block lg:mt-0">
+        <Diagram lang={data.lang} bare />
+      </div>
+    )
+  }
 </article>

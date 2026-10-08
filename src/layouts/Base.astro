@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css"
-import interUrl from "@/assets/fonts/inter-latin-wght-normal.woff2?url"
+import geistUrl from "@/assets/fonts/geist-latin-wght-normal.woff2?url"
 import groteskUrl from "@/assets/fonts/space-grotesk-latin-wght-normal.woff2?url"
 import Footer from "@/components/Footer.astro"
 import Header from "@/components/Header.astro"
@@ -17,9 +17,11 @@ interface Props {
   type?: "website" | "article"
   person?: boolean
   noindex?: boolean
+  /** Sección del menú que queda marcada en esta página. */
+  current?: "cases"
 }
 
-const { lang, type, person, noindex } = Astro.props
+const { lang, type, person, noindex, current } = Astro.props
 const t = useTranslations(lang)
 const title = Astro.props.title ? `${Astro.props.title} · Jeremy Ayza` : t("meta.title")
 const description = Astro.props.description ?? t("meta.description")
@@ -48,7 +50,7 @@ const beaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN
     <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f6f8fb" media="(prefers-color-scheme: light)" />
     <link rel="preload" as="font" type="font/woff2" href={groteskUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={interUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={geistUrl} crossorigin />
     {
       beaconToken && (
         <script
@@ -67,7 +69,7 @@ const beaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN
     >
       {t("skip")}
     </a>
-    <Header lang={lang} />
+    <Header lang={lang} current={current} />
     <main id="main">
       <slot />
     </main>

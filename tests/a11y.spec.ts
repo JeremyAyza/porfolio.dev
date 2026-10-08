@@ -4,6 +4,10 @@ import { ALL_PAGES, HOME, LANGS } from "./pages"
 
 const THEMES = ["dark", "light"] as const
 
+/** La entrada del hero baja la opacidad un instante; el contraste se mide con la página ya quieta. */
+const settled = (page: import("@playwright/test").Page) =>
+  page.waitForFunction(() => document.getAnimations().every((animation) => animation.playState === "finished"))
+
 for (const theme of THEMES) {
   for (const item of ALL_PAGES) {
     for (const lang of LANGS) {
@@ -11,6 +15,7 @@ for (const theme of THEMES) {
         await page.emulateMedia({ colorScheme: theme })
         await page.goto(item[lang])
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme)
+        await settled(page)
 
         const { violations, passes } = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
@@ -27,6 +32,7 @@ for (const theme of THEMES) {
     await page.goto(HOME.es)
     await page.locator("header [data-search-open]").click()
     await expect(page.locator("#search-dialog [data-search-load]")).toBeEnabled()
+    await settled(page)
 
     const { violations } = await new AxeBuilder({ page })
       .include("#search-dialog")

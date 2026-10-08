@@ -8,23 +8,27 @@ import { useTranslations } from "@/i18n/ui"
 
 interface Props {
   lang: Lang
+  /** Sección a marcar como activa fuera del inicio (por ejemplo, en la página de un caso). */
+  current?: keyof (typeof SECTION_IDS)[Lang]
 }
 
-const { lang } = Astro.props
+const { lang, current } = Astro.props
 const t = useTranslations(lang)
 const home = homePath(lang)
 const ids = SECTION_IDS[lang]
 
-const links = [
-  { href: `${home}#${ids.cases}`, label: t("nav.cases") },
-  { href: `${home}#${ids.experience}`, label: t("nav.experience") },
-  { href: `${home}#${ids.work}`, label: t("nav.work") },
-  { href: `${home}#${ids.contact}`, label: t("nav.contact") },
-]
+const links = (
+  [
+    ["cases", t("nav.cases")],
+    ["experience", t("nav.experience")],
+    ["work", t("nav.work")],
+    ["contact", t("nav.contact")],
+  ] as const
+).map(([key, label]) => ({ id: ids[key], href: `${home}#${ids[key]}`, label, current: key === current }))
 ---
 
 <header class="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
-  <div class="mx-auto flex h-16 max-w-[1080px] items-center justify-between gap-3 px-5 sm:px-8">
+  <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-3 px-5 sm:px-8">
     <a href={home} class="flex min-h-11 items-center gap-2.5 font-display text-lg font-bold tracking-tight">
       <span class="h-5 w-1 bg-accent" aria-hidden="true"></span>
       {SITE.name}
@@ -35,7 +39,12 @@ const links = [
         {
           links.map((link) => (
             <li>
-              <a href={link.href} class="inline-flex min-h-11 items-center transition-colors hover:text-ink">
+              <a
+                href={link.href}
+                class="nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink"
+                data-nav={link.id}
+                aria-current={link.current ? "true" : undefined}
+              >
                 {link.label}
               </a>
             </li>
@@ -60,3 +69,28 @@ const links = [
     </div>
   </div>
 </header>
+
+<script>
+  // Marca en el menú la sección que se está leyendo.
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>("[data-nav]")].map((link) => [link.dataset.nav, link]),
+  )
+  const sections = [...document.querySelectorAll<HTMLElement>("[data-section]")]
+
+  if (sections.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          for (const [id, link] of links) {
+            if (id === entry.target.id) link.setAttribute("aria-current", "true")
+            else link.removeAttribute("aria-current")
+          }
+        }
+      },
+      // Cuenta como activa la sección que cruza una franja en el tercio superior de la pantalla.
+      { rootMargin: "-30% 0px -65% 0px" },
+    )
+    for (const section of sections) observer.observe(section)
+  }
+</script>

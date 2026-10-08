@@ -4,6 +4,7 @@ import type { Lang } from "@/i18n/routes"
 
 interface Props {
   lang: Lang
+  bare?: boolean
 }
 
 interface Step {
@@ -69,7 +70,7 @@ const rows = l.steps.map((step, index) => {
 const totalHeight = cursor - GAP + 8
 ---
 
-<DiagramFigure caption={l.caption}>
+<DiagramFigure caption={l.caption} bare={Astro.props.bare}>
   <svg
     class="dg mx-auto h-auto w-full max-w-[23rem]"
     viewBox={`0 0 320 ${totalHeight}`}
