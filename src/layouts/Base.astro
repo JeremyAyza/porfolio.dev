@@ -4,6 +4,7 @@ import interUrl from "@/assets/fonts/inter-latin-wght-normal.woff2?url"
 import groteskUrl from "@/assets/fonts/space-grotesk-latin-wght-normal.woff2?url"
 import Footer from "@/components/Footer.astro"
 import Header from "@/components/Header.astro"
+import SearchDialog from "@/components/SearchDialog.astro"
 import Seo from "@/components/Seo.astro"
 import type { Lang } from "@/i18n/routes"
 import { useTranslations } from "@/i18n/ui"
@@ -71,5 +72,6 @@ const beaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN
       <slot />
     </main>
     <Footer lang={lang} />
+    <SearchDialog lang={lang} />
   </body>
 </html>

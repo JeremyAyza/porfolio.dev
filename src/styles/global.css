@@ -191,6 +191,21 @@
     display: block;
   }
 
+  .search-dialog {
+    width: min(42rem, calc(100vw - 2rem));
+    max-width: none;
+    margin: 8vh auto auto;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background-color: var(--surface);
+    color: var(--ink);
+    padding: 0;
+  }
+
+  .search-dialog::backdrop {
+    background-color: rgb(5 9 17 / 0.7);
+  }
+
   /* Texto de los casos (MDX). */
   .prose-case > * + * {
     margin-top: 1rem;

@@ -1,0 +1,93 @@
+---
+import Icon from "./Icon.astro"
+import type { Lang } from "@/i18n/routes"
+import { clientStrings, useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const examples = [t("search.example.1"), t("search.example.2"), t("search.example.3")]
+---
+
+<dialog
+  id="search-dialog"
+  class="search-dialog"
+  aria-labelledby="search-title"
+  data-lang={lang}
+  data-strings={JSON.stringify(clientStrings(lang, "search."))}
+>
+  <div class="flex max-h-[85dvh] flex-col">
+    <header class="flex items-start justify-between gap-4 border-b border-line p-5">
+      <div>
+        <h2 id="search-title" class="font-display text-lg font-bold">{t("search.title")}</h2>
+        <p class="mt-1 text-sm text-muted">{t("search.hint")}</p>
+      </div>
+      <form method="dialog">
+        <button
+          class="-mr-2 -mt-2 inline-flex size-11 items-center justify-center rounded-lg text-muted hover:text-ink"
+          aria-label={t("search.close")}
+        >
+          <Icon name="close" />
+        </button>
+      </form>
+    </header>
+
+    <div class="overflow-y-auto p-5">
+      <div data-search-start>
+        <button type="button" class="btn" data-search-load disabled>…</button>
+        <div
+          class="mt-4 h-1.5 overflow-hidden rounded-full bg-surface-2"
+          role="progressbar"
+          aria-label={t("search.loading")}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          data-search-progress
+          hidden
+        >
+          <div class="h-full w-0 bg-accent transition-[width]" data-search-bar></div>
+        </div>
+      </div>
+
+      <div data-search-main hidden>
+        <label class="sr-only" for="search-input">{t("search.title")}</label>
+        <div class="flex items-center gap-3 rounded-lg border border-line bg-bg px-3 focus-within:border-accent">
+          <Icon name="search" class="flex-none text-muted" />
+          <input
+            id="search-input"
+            type="search"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder={t("search.placeholder")}
+            class="h-12 w-full bg-transparent text-base outline-none placeholder:text-muted"
+          />
+        </div>
+        <div class="mt-3 flex flex-wrap items-center gap-2" data-search-examples>
+          <span class="label">{t("search.examples")}</span>
+          {
+            examples.map((example) => (
+              <button type="button" class="chip hover:border-accent hover:text-ink" data-search-example>
+                {example}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <p class="label mt-4" role="status" data-search-status></p>
+      <ol class="mt-2 divide-y divide-line" aria-label={t("search.results")} data-search-results></ol>
+    </div>
+
+    <footer class="space-y-1 border-t border-line p-5">
+      <p class="label">{t("search.model")}</p>
+      <p class="label">{t("search.limit")}</p>
+    </footer>
+  </div>
+</dialog>
+
+<script>
+  import "@/scripts/search/client"
+</script>

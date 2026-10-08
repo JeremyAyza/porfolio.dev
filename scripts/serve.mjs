@@ -44,6 +44,7 @@ createServer(async (request, response) => {
   const path = file ?? join(root, "404.html")
   response.writeHead(file ? 200 : 404, {
     "Content-Type": TYPES[extname(path)] ?? "application/octet-stream",
+    "Content-Length": (await stat(path)).size,
     "Cache-Control": "no-cache",
   })
   createReadStream(path).pipe(response)
