@@ -1,5 +1,25 @@
 ---
+import { SITE } from "@/data/site"
 import { DEFAULT_LANG, homePath } from "@/i18n/routes"
 
-return Astro.redirect(homePath(DEFAULT_LANG))
+// La raíz solo redirige al idioma principal. Astro.redirect() espera 2 segundos en un sitio
+// estático, así que la página se escribe a mano para que el salto sea inmediato.
+const target = homePath(DEFAULT_LANG)
 ---
+
+<!doctype html>
+<html lang={DEFAULT_LANG}>
+  <head>
+    <meta charset="utf-8" />
+    <title>{SITE.name}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(target, Astro.site).href} />
+    <script is:inline define:vars={{ target }}>
+      location.replace(target + location.search + location.hash)
+    </script>
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+  </head>
+  <body>
+    <a href={target}>{SITE.name}</a>
+  </body>
+</html>

@@ -31,7 +31,7 @@ export function extractChunks(html, url) {
   const body = root.querySelector("[data-case-body]")
   if (body) {
     const caseTitle = clean(root.querySelector("h1").textContent)
-    chunks.push({ title: caseTitle, text: clean(root.querySelector("article header").textContent), url })
+    chunks.push({ title: caseTitle, text: clean(root.querySelector("[data-case-summary]").textContent), url })
 
     let current = null
     for (const node of body.childNodes) {
