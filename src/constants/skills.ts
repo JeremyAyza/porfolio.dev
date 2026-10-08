@@ -321,4 +321,12 @@ export const SKILLS= {
     color: "currentColor",
     label: "Recharts",
   },
+  whisper: {
+    color: "currentColor",
+    label: "Whisper",
+  },
+  gemini: {
+    color: "currentColor",
+    label: "Gemini API",
+  },
 };
