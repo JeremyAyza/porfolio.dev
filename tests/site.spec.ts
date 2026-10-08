@@ -75,19 +75,25 @@ for (const item of ALL_PAGES) {
 for (const lang of LANGS) {
   test(`el titular del inicio ocupa dos líneas como máximo en escritorio (${lang})`, async ({ page, isMobile }) => {
     test.skip(isMobile, "La regla es para escritorio")
-    await page.goto(HOME[lang])
-    const lines = await page.getByRole("heading", { level: 1 }).evaluate((h1) => {
-      const style = getComputedStyle(h1)
-      return Math.round(h1.getBoundingClientRect().height / parseFloat(style.lineHeight))
-    })
-    expect(lines).toBeLessThanOrEqual(2)
+    for (const width of [1024, 1152, 1280, 1440, 1920]) {
+      await page.setViewportSize({ width, height: 800 })
+      await page.goto(HOME[lang])
+      const lines = await page.getByRole("heading", { level: 1 }).evaluate((h1) => {
+        const style = getComputedStyle(h1)
+        return Math.round(h1.getBoundingClientRect().height / parseFloat(style.lineHeight))
+      })
+      expect(lines, `a ${width} px de ancho`).toBeLessThanOrEqual(2)
+    }
   })
 
   test(`el botón principal y el buscador del inicio se ven sin hacer scroll (${lang})`, async ({ page, isMobile }) => {
     test.skip(isMobile, "La regla es para escritorio")
-    await page.goto(HOME[lang])
-    await expect(page.locator("main .btn-primary")).toBeInViewport({ ratio: 1 })
-    await expect(page.locator("main [data-search-open]").first()).toBeInViewport({ ratio: 1 })
+    for (const size of [{ width: 1024, height: 700 }, { width: 1280, height: 720 }]) {
+      await page.setViewportSize(size)
+      await page.goto(HOME[lang])
+      await expect(page.locator("main .btn-primary")).toBeInViewport({ ratio: 1 })
+      await expect(page.locator("main [data-search-open]").first()).toBeInViewport({ ratio: 1 })
+    }
   })
 }
 
