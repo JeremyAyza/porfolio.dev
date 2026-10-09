@@ -21,22 +21,19 @@ export const LOCATION: Record<Lang, string> = {
   en: "Lima, Peru",
 }
 
-/** El titular va en partes para poder resaltar dos frases. */
+/** El titular va en partes para poder resaltar una frase. */
 export const HEADLINE: Record<Lang, { text: string; accent?: boolean }[]> = {
   es: [
-    { text: "Construyo productos en React y TypeScript que " },
+    { text: "Construyo productos que " },
     { text: "siguen funcionando sin internet", accent: true },
-    { text: ", y las " },
-    { text: "funciones con LLM", accent: true },
-    { text: " que llevan dentro." },
+    { text: "." },
   ],
-  en: [
-    { text: "I build React and TypeScript products that " },
-    { text: "keep working offline", accent: true },
-    { text: ", and the " },
-    { text: "LLM features", accent: true },
-    { text: " inside them." },
-  ],
+  en: [{ text: "I build products that " }, { text: "keep working offline", accent: true }, { text: "." }],
+}
+
+export const SUBHEAD: Record<Lang, string> = {
+  es: "En React y TypeScript, con las funciones con LLM que llevan dentro.",
+  en: "In React and TypeScript, with the LLM features inside them.",
 }
 
 export interface Figure {

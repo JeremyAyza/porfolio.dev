@@ -24,8 +24,8 @@ const t = useTranslations(lang)
 const { Content } = await render(entry)
 ---
 
-<Base lang={lang} title={data.title} description={data.summary} image={`/og/${data.caseId}-${lang}.png`} type="article">
-  <article class="mx-auto max-w-[1080px] px-5 pt-8 sm:px-8 sm:pt-12" data-case={data.caseId}>
+<Base lang={lang} title={data.title} description={data.summary} image={`/og/${data.caseId}-${lang}.png`} type="article" current="cases">
+  <article class="mx-auto max-w-[1200px] px-5 pt-8 sm:px-8 sm:pt-12" data-case={data.caseId}>
     <a
       class="label inline-flex min-h-11 items-center gap-2 transition-colors hover:text-ink"
       href={`${homePath(lang)}#${SECTION_IDS[lang].cases}`}

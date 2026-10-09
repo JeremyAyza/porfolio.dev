@@ -3,7 +3,7 @@
 import { mkdir, readFile, readdir } from "node:fs/promises"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { chromium } from "@playwright/test"
-import { HEADLINE, LOCATION, SITE } from "../src/data/site.ts"
+import { HEADLINE, LOCATION, SITE, SUBHEAD } from "../src/data/site.ts"
 
 const root = new URL("../", import.meta.url)
 const out = new URL("public/og/", root)
@@ -17,23 +17,25 @@ const KIND = {
 
 const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
 
-function page({ eyebrow, headline, size }) {
+function page({ eyebrow, headline, sub = "", size }) {
   return `<!doctype html>
 <html><head><meta charset="utf-8"><style>
 @font-face { font-family: Grotesk; src: url("${font("space-grotesk-latin-wght-normal.woff2")}"); font-weight: 300 700; }
-@font-face { font-family: Mono; src: url("${font("jetbrains-mono-latin-wght-normal.woff2")}"); font-weight: 100 800; }
+@font-face { font-family: Mono; src: url("${font("geist-mono-latin-wght-normal.woff2")}"); font-weight: 100 900; }
+@font-face { font-family: Sans; src: url("${font("geist-latin-wght-normal.woff2")}"); font-weight: 100 900; }
 * { box-sizing: border-box; margin: 0; }
 body { width: 1200px; height: 630px; padding: 64px 72px; display: flex; flex-direction: column; justify-content: space-between;
   background: #0b1220 radial-gradient(#1a2640 1.5px, transparent 1.5px) 0 0 / 28px 28px; color: #e8eef8; font-family: Grotesk; }
 .eyebrow { font-family: Mono; font-size: 24px; color: #9fb0cc; }
 h1 { margin-top: 28px; padding-left: 32px; border-left: 8px solid #3ddc97; font-size: ${size}px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; }
 h1 span { color: #3ddc97; }
+.sub { margin: 24px 0 0 40px; font-family: Sans; font-size: 34px; line-height: 1.3; color: #9fb0cc; max-width: 900px; }
 footer { display: flex; align-items: center; gap: 20px; }
 img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid #24324d; }
 .name { font-size: 30px; font-weight: 700; }
 .role { font-family: Mono; font-size: 20px; color: #9fb0cc; }
 </style></head><body>
-<div><p class="eyebrow">${escape(eyebrow)}</p><h1>${headline}</h1></div>
+<div><p class="eyebrow">${escape(eyebrow)}</p><h1>${headline}</h1>${sub && `<p class="sub">${escape(sub)}</p>`}</div>
 <footer><img src="${photo}" alt=""><div><p class="name">${SITE.name}</p><p class="role">${escape(SITE.role)}</p></div></footer>
 </body></html>`
 }
@@ -46,7 +48,8 @@ for (const lang of ["es", "en"]) {
     html: page({
       eyebrow: `${SITE.role} · ${LOCATION[lang]}`,
       headline: HEADLINE[lang].map((part) => (part.accent ? `<span>${escape(part.text)}</span>` : escape(part.text))).join(""),
-      size: 58,
+      sub: SUBHEAD[lang],
+      size: 74,
     }),
   })
 

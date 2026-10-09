@@ -142,10 +142,15 @@ function setup(dialog: HTMLDialogElement) {
     }
   }
 
-  function open() {
+  /** Abre el panel. Con `initial`, deja esa consulta escrita y la busca en cuanto el modelo esté listo. */
+  function open(initial?: string) {
     if (dialog.open) return
+    if (initial) input.value = initial
     dialog.showModal()
-    if (state === "ready") input.focus()
+    if (state === "ready") {
+      input.focus()
+      query()
+    }
     void prepare()
   }
 
@@ -169,7 +174,9 @@ function setup(dialog: HTMLDialogElement) {
     })
   }
 
-  for (const button of document.querySelectorAll("[data-search-open]")) button.addEventListener("click", open)
+  for (const button of document.querySelectorAll<HTMLElement>("[data-search-open]")) {
+    button.addEventListener("click", () => open(button.dataset.searchQuery))
+  }
 
   // Clic en el fondo: cierra.
   dialog.addEventListener("click", (event) => {

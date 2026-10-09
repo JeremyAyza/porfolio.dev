@@ -13,9 +13,9 @@ const CASE_SLUG: Record<CaseId, Record<Lang, string>> = {
   "video-pipeline": { es: "pipeline-de-video", en: "video-pipeline" },
 }
 
-export const SECTION_IDS: Record<Lang, { cases: string; demos: string; experience: string; work: string; contact: string }> = {
-  es: { cases: "casos", demos: "demos", experience: "experiencia", work: "mas-trabajo", contact: "contacto" },
-  en: { cases: "cases", demos: "demos", experience: "experience", work: "more-work", contact: "contact" },
+export const SECTION_IDS: Record<Lang, { cases: string; experience: string; work: string; contact: string }> = {
+  es: { cases: "casos", experience: "experiencia", work: "mas-trabajo", contact: "contacto" },
+  en: { cases: "cases", experience: "experience", work: "more-work", contact: "contact" },
 }
 
 export function isLang(value: string | undefined): value is Lang {

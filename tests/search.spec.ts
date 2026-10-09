@@ -55,6 +55,16 @@ test("un resultado lleva a la sección y cierra el panel", async ({ page }) => {
   await expect(page).toHaveURL(new RegExp(CASES[1].es))
 })
 
+test("un ejemplo del inicio abre el buscador con la consulta y la responde", async ({ page }) => {
+  await page.goto(HOME.es)
+  await page.locator("main [data-search-query]").nth(1).click()
+
+  const dialog = page.locator("#search-dialog")
+  await expect(dialog.locator("#search-input")).toHaveValue("cuánto cuesta producir un video")
+  await dialog.locator("[data-search-load]").click()
+  await expect(dialog.locator("[data-search-results] a").first()).toContainText(/video/i, { timeout: 90_000 })
+})
+
 test("la tecla / abre el buscador y Escape lo cierra", async ({ page, isMobile }) => {
   test.skip(isMobile, "Atajo de teclado")
   await page.goto(HOME.es)

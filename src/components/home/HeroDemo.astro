@@ -1,0 +1,48 @@
+---
+import Icon from "@/components/Icon.astro"
+import OfflineStatus from "@/components/OfflineStatus.astro"
+import type { Lang } from "@/i18n/routes"
+import { useTranslations } from "@/i18n/ui"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const examples = [t("search.example.1"), t("search.example.2"), t("search.example.3")]
+---
+
+<aside class="rise rounded-xl border border-line bg-surface p-5 sm:p-6" style="--i:4" aria-labelledby="demo-title">
+  <h2 id="demo-title" class="font-display text-lg font-bold">{t("demos.title")}</h2>
+  <p class="mt-1 text-sm text-muted">{t("demos.search.body")}</p>
+
+  <button
+    type="button"
+    data-search-open
+    class="mt-4 flex h-12 w-full items-center gap-3 rounded-lg border border-line bg-bg px-3 text-left text-muted transition-colors hover:border-accent"
+  >
+    <Icon name="search" class="flex-none" />
+    <span class="truncate">{t("search.placeholder")}</span>
+  </button>
+  <ul class="mt-3 flex flex-wrap gap-2">
+    {
+      examples.map((example) => (
+        <li>
+          <button type="button" class="chip text-left hover:border-accent hover:text-ink" data-search-open data-search-query={example}>
+            {example}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-5 border-t border-line pt-4">
+    <p class="flex items-center gap-2 text-sm font-semibold">
+      <Icon name="wifi-off" size={16} class="flex-none text-accent" />
+      {t("demos.offline.title")}
+    </p>
+    <p class="mt-1 text-sm text-muted">{t("demos.offline.body")}</p>
+    <div class="mt-3"><OfflineStatus lang={lang} /></div>
+  </div>
+</aside>

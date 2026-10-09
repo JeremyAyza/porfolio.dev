@@ -62,4 +62,4 @@ La analítica funciona igual en los dos: crea el sitio en Cloudflare Web Analyti
 
 ## Fuentes
 
-Space Grotesk, Inter y JetBrains Mono (SIL Open Font License 1.1), servidas desde el propio sitio.
+Space Grotesk, Geist y Geist Mono (SIL Open Font License 1.1), servidas desde el propio sitio.

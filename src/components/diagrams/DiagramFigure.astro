@@ -1,12 +1,20 @@
 ---
 interface Props {
   caption: string
+  /** Sin marco ni pie: para mostrar el diagrama dentro de otra tarjeta. */
+  bare?: boolean
 }
 
-const { caption } = Astro.props
+const { caption, bare = false } = Astro.props
 ---
 
-<figure class="my-8 rounded-xl border border-line bg-surface-2/40 p-4 sm:p-6">
-  <slot />
-  <figcaption class="label mt-4 text-center">{caption}</figcaption>
-</figure>
+{
+  bare ? (
+    <slot />
+  ) : (
+    <figure class="my-8 rounded-xl border border-line bg-surface-2/40 p-4 sm:p-6">
+      <slot />
+      <figcaption class="label mt-4 text-center">{caption}</figcaption>
+    </figure>
+  )
+}

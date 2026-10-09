@@ -9,17 +9,17 @@
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("../assets/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-family: "Geist";
+  src: url("../assets/fonts/geist-latin-wght-normal.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "JetBrains Mono";
-  src: url("../assets/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
-  font-weight: 100 800;
+  font-family: "Geist Mono";
+  src: url("../assets/fonts/geist-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -78,8 +78,8 @@
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 @layer base {
@@ -96,6 +96,19 @@
     font-size: 1rem;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
   }
 
   :focus-visible {
@@ -174,11 +187,50 @@
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--ink);
-    transition: border-color 0.15s;
+    transition:
+      border-color 0.15s,
+      transform 0.1s;
   }
 
   .btn:hover {
     border-color: var(--accent);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-primary {
+    border-color: var(--accent);
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+
+  /* Entrada del hero: cada bloque sube un poco, uno tras otro. */
+  @media (prefers-reduced-motion: no-preference) {
+    .rise {
+      animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(var(--i, 0) * 70ms);
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+  }
+
+  .nav-link[aria-current="true"] {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
   }
 
   /* El botón de tema muestra el icono del tema al que cambia. */

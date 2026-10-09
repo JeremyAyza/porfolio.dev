@@ -11,7 +11,7 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
-<section aria-label={t("figures.label")} class="mx-auto max-w-[1080px] px-5 sm:px-8" data-chunk={t("figures.label")}>
+<section aria-label={t("figures.label")} class="mx-auto max-w-[1200px] px-5 sm:px-8" data-chunk={t("figures.label")}>
   <dl class="grid gap-x-10 gap-y-8 border-y border-line py-8 sm:grid-cols-3" data-figures>
     {
       FIGURES[lang].map((figure) => (
